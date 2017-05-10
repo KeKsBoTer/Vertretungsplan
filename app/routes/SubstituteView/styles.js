@@ -1,5 +1,6 @@
 /**
  * Created by Simon on 23.03.2017.
+ * Styling for the Substitute-View
  */
 
 const React = require('react-native');
@@ -19,14 +20,14 @@ module.exports = StyleSheet.create({
     classSelection: {
         margin: 10,
         paddingLeft: 10,
-        marginBottom:0,
+        marginBottom: 0,
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "white",
         borderRadius: 5,
         opacity: 0.7
     },
-    classText:{
+    classText: {
         fontSize: 17,
         color: "black"
     }

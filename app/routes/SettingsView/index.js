@@ -13,6 +13,8 @@ const styles = require("./styles");
 const img = require('./icon.png');
 import {byteLength} from "Vertretungsplan/app/utils";
 
+
+//TODO Pack ListItem in own file and separate styling
 class ListItem extends Component {
     render() {
         return (
@@ -75,7 +77,7 @@ class SettingsView extends Component {
 
 
     _copyEmailToClipboard = () => {
-        Clipboard.setString('simon.niedermayr@gmx.de');
+        Clipboard.setString(AppText.contact_email);
         ToastAndroid.show("Email wurde in den Zwischenspeicher Kopiert", ToastAndroid.SHORT);
     };
 

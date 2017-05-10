@@ -33,7 +33,6 @@ module.exports = StyleSheet.create({
         shadowOpacity: 0,   //remove shadow on iOS
     },
     headerLabel: {
-        //alignSelf: 'center',
         fontSize: 20,
         fontWeight: "100",
         color: "#797979"

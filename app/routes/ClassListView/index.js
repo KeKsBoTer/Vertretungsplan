@@ -6,8 +6,7 @@ import {View, ListView, RefreshControl, NetInfo} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ClassListItem from "Vertretungsplan/app/components/ClassListItem";
 import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
-import {getAsyncStorage} from "../../utils";
-import {getData} from "Vertretungsplan/app/utils";
+import {getData,getAsyncStorage} from "Vertretungsplan/app/utils";
 
 const styles = require("./styles");
 
@@ -78,7 +77,7 @@ class ClassView extends Component {
             .done();
     };
 
-    _toogleView = (e) => {
+    _toggleView = (e) => {
         this.setState({
             showSubs: !this.state.showSubs,
             class: e
@@ -111,7 +110,7 @@ class ClassView extends Component {
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) => <ClassListItem
                         callback={() => {
-                            this._toogleView(rowData)
+                            this._toggleView(rowData)
                         }}
                         klasse={rowData}
                         navigation={this.props.navigation}

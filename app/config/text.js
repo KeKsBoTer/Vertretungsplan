@@ -1,7 +1,7 @@
 /**
  * Created by Simon on 23.03.2017.
  */
-
+//TODO separate displayed text and app strings like internal links
 module.exports = {
     appName: "Vertretungsplan",
     server: "http://kleinkindergottesdienst-aichach.de/vplan/",

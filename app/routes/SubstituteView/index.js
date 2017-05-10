@@ -1,20 +1,21 @@
 /**
  * Created by Simon on 29.03.2017.
- */
-/**
- * Created by Simon on 23.03.2017.
+ * @author S. Niedermayr
  */
 import React, {Component} from "react";
 import {View, ScrollView, RefreshControl, Picker, Text, NetInfo} from "react-native";
 import DayTable from "Vertretungsplan/app/components/DayTable";
-//import BackgroundTimer from 'react-native-background-timer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
 import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
 
 const styles = require("./styles");
-//let backgroundTimer;
 
+/**
+ * Function to create a list with all possible classes.
+ * 5-10/A-F + Q11,Q12
+ * @returns {Array} Array of strings
+ */
 function getClasses() {
     let cs = ["A", "B", "C", "D", "E", "F"];
     let classes = [];
@@ -80,43 +81,7 @@ class SubstituteView extends Component {
             'change',
             this.initView
         );
-        //AppState.addEventListener('change', this._handleAppStateChange);
     }
-
-    componentWillUnmount() {
-        // AppState.removeEventListener('change', this._handleAppStateChange);
-    }
-
-    /*
-     Replace with google firebase
-     _handleAppStateChange = (nextAppState) => {
-     if (nextAppState === "active" && backgroundTimer) {
-     if (this.state.updateOnOpen) {
-     console.log("update on open");
-     this.setState({updateOnOpen: false});
-     this._onRefresh();
-     }
-     BackgroundTimer.clearTimeout(backgroundTimer);
-     }
-     else if (nextAppState === "background") {
-     backgroundTimer = BackgroundTimer.setInterval(() => {
-     try {
-     getAsyncStorage('GetSubstituteForClass.php?class=' + this.state.class)
-     .then((value) => {
-     let hash = MD5(value);
-     downloadData('GetSubstituteForClass.php?class=' + this.state.class + '&hash=' + hash + "a").then((value) => {
-     console.log("Check News: " + value);
-     if (value !== "[]") {
-     BackgroundTimer.clearTimeout(backgroundTimer);
-     this.setState({updateOnOpen: true});
-     }
-     }).catch(() => console.error("Error background update!"));
-     });
-     } catch (e) {
-     }
-     }, 10000);
-     }
-     };*/
 
     updateState = (text, finishLoading = true) => {
         let json = JSON.parse(text);

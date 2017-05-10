@@ -1,9 +1,11 @@
 /**
  * Created by Simon on 23.03.2017.
+ * @author S. Niedermayr
+ *
+ * Main file with TabNavigator
  */
 
 import React from "react";
-//import {TouchableHighlight, Image} from "react-native";
 import {TabNavigator, StackNavigator} from "react-navigation";
 import SubstituteView from 'Vertretungsplan/app/routes/SubstituteView/index';
 import DateView from 'Vertretungsplan/app/routes/DateView/index';
@@ -51,16 +53,21 @@ const MainScreenNavigator = TabNavigator({
 
 
 const App = StackNavigator({
-    Home: {screen: MainScreenNavigator},
-    ClassView: {screen: SubViewItem},
-    Settings: {screen: SettingsView},
+    Home: {
+        screen: MainScreenNavigator
+    },
+    ClassView: {
+        screen: SubViewItem
+    },
+    Settings: {
+        screen: SettingsView
+    },
 }, {
-    cardStyle: {backgroundColor: '#cacaca'},
+    cardStyle: {
+        backgroundColor: '#cacaca'
+    },
     navigationOptions: {
         header: ({navigate}) => ({
-            /*right: true?(<TouchableHighlight underlayColor="#e7e7e7" onPress={() => navigate('Settings')}>
-                <Image source={require("./settings.png")} style={{width: 25, height: 25, marginRight: 15}}/>
-            </TouchableHighlight>):null,*/
             style: styles.header,
             titleStyle: styles.headerLabel
         })

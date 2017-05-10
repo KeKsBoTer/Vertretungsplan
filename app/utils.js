@@ -1,6 +1,7 @@
 /**
  * Created by Simon on 20.04.2017.
  * Utils file with several functions, that are used all around the project
+ * @author S. Niedermayr
  */
 
 import {Alert, AsyncStorage} from "react-native";
