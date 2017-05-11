@@ -3,12 +3,10 @@ package com.dotcookie.vertretungsplan;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.oney.gcm.GcmPackage;
-import com.ocetnik.timer.BackgroundTimerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
+import com.ocetnik.timer.BackgroundTimerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,12 +27,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
             new RNVersionNumberPackage(),
-            new ReactNativePushNotificationPackage(),
-            new GcmPackage(),
-            new BackgroundTimerPackage(),
-            new SvgPackage()
+            new VectorIconsPackage(),
+            new SvgPackage(),
+            new BackgroundTimerPackage()
       );
     }
   };
