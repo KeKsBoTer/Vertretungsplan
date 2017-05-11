@@ -5,6 +5,7 @@
 Die App stellt den  [Vertretungsplan](https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php) in einer nativen App dar und erlaubt das Filtern nacht Klassen und Datum.
 
 #Screenshots
+
 | ClassView | DateView | SubView |
 | --- | --- | --- |
 | ![ClassVew](screenshots/ClassView.png) | ![DateView](screenshots/DateView.png) | ![SubView](screenshots/SubView.png) |
