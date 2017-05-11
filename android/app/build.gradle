@@ -149,8 +149,8 @@ android {
 dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-version-number')
-    compile project(':react-native-push-notification')
-    compile project(':react-native-gcm-push-notification')
+    //compile project(':react-native-push-notification')
+    //compile project(':react-native-gcm-push-notification')
     compile project(':react-native-background-timer')
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-svg')
