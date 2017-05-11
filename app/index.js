@@ -1,16 +1,17 @@
 /**
  * Created by Simon on 23.03.2017.
+ * @author S. Niedermayr
  */
 
 import React from "react";
 //import {TouchableHighlight, Image} from "react-native";
-import {TabNavigator, StackNavigator} from "react-navigation";
-import SubstituteView from 'Vertretungsplan/app/routes/SubstituteView/index';
-import DateView from 'Vertretungsplan/app/routes/DateView/index';
-import ClassView from 'Vertretungsplan/app/routes/ClassListView/index';
-import SubViewItem from 'Vertretungsplan/app/components/SubViewItem/index';
-import SettingsView from 'Vertretungsplan/app/routes/SettingsView/index';
-const styles = require('./styles');
+import {StackNavigator, TabNavigator} from "react-navigation";
+import SubstituteView from "Vertretungsplan/app/routes/SubstituteView/index";
+import DateView from "Vertretungsplan/app/routes/DateView/index";
+import ClassView from "Vertretungsplan/app/routes/ClassListView/index";
+import SubViewItem from "Vertretungsplan/app/components/SubViewItem/index";
+import SettingsView from "Vertretungsplan/app/routes/SettingsView/index";
+import styles from "./styles";
 
 const MainScreenNavigator = TabNavigator({
     MyClass: {screen: SubstituteView},
