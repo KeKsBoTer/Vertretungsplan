@@ -52,7 +52,7 @@ export function downloadData(url) {
         }).then((response) => {
             setTimeout(() => null, 0); //for debugging in chrome
             if (response._bodyText) {
-                setAsyncStorage(url, response._bodyText); //save downloaded data
+                setAsyncStorage(url, response._bodyText).done(); //save downloaded data
                 resolve(response._bodyText);
             } else {
                 throw -1 //throw error and continue to catch if body is empty

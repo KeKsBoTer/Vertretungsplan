@@ -88,7 +88,7 @@ class ClassView extends Component {
         let i = 0;
         let max = 0;
         //counting children
-        for (_obj in this.state.data) max++;
+        for (let item in this.state.data) max++;
         let _listView: ListView;
         return (
             <View>
