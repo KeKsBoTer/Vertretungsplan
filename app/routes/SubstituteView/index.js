@@ -3,11 +3,11 @@
  * @author S. Niedermayr
  */
 import React, {Component} from "react";
-import {View, ScrollView, RefreshControl, Picker, Text, NetInfo} from "react-native";
+import {View, Picker, Text} from "react-native";
 import DayTable from "Vertretungsplan/app/components/DayTable";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
 import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
+import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
 
 const styles = require("./styles");
 
@@ -46,64 +46,38 @@ class SubstituteView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            class: "5A",
             data: [],
-            isRefreshing: false,
-            class: "",
-            updateOnOpen: false
+            updateFunction: null
         };
     }
 
-    initView = () => {
-        setTimeout(this._onRefresh, 10);
-        NetInfo.removeEventListener(
-            'change',
-            this.initView
-        );
-    };
-
-    componentDidMount() {
-        let myClass = "5A";
+    componentWillMount() {
         getAsyncStorage("MyClass")
-            .then((value) => {
-                if (value)
-                    myClass = value;
-                else
-                    setAsyncStorage("MyClass", myClass)
-            })
-            .done(() => {
-                    this.setState({class: myClass});
-                    getAsyncStorage('GetSubstituteForClass.php?class=' + this.state.class)
-                        .then((data) => data && this.updateState(data, false))
-                        .done();
+            .then((className) => {
+                if (className) {
+                    getAsyncStorage(this.props.url)
+                        .then((value) => {
+                            if (value)
+                                this.setState({
+                                    data: JSON.parse(value)
+                                });
+                        });
+                    this.setState({class: className});
+                    setAsyncStorage("MyClass", className);
                 }
-            );
-        NetInfo.addEventListener(
-            'change',
-            this.initView
-        );
+                this.state.updateFunction && this.state.updateFunction();
+            });
     }
 
-    updateState = (text, finishLoading = true) => {
-        let json = JSON.parse(text);
-        this.setState({
-            data: [] //clearing data
-        }, () => {
-            for (let v in json.subs)
-                if (json.subs.hasOwnProperty(v)) {
-                    this.state.data[v] = json.subs[v];
-                }
-            this.setState({
-                data: this.state.data,
-                isRefreshing: !finishLoading
-            });
-        });
-    };
-
-    _onRefresh = () => {
-        this.setState({isRefreshing: true});
-        getData('GetSubstituteForClass.php?class=' + this.state.class)
-            .then((value) => this.updateState(value))
-            .catch(() => this.setState({isRefreshing: false}));
+    processData = (json) => {
+        console.log(json);
+        let data = [];
+        for (let v in json.subs)
+            if (json.subs.hasOwnProperty(v))
+                data[v] = json.subs[v];
+        this.setState({data: data});
+        setAsyncStorage("GetSubstituteForClass.php?class=last", JSON.stringify(json));
     };
 
     render() {
@@ -114,41 +88,31 @@ class SubstituteView extends Component {
             return <Picker.Item key={c} value={c} label={c}/>
         });
         return (
-            <View>
-                {this.state.isRefreshing &&
-                <ProgressBar/>}
-
-                <ScrollView
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this._onRefresh}
-                            title="Loading..."
-                        />
-                    }>
-                    <View style={styles.classSelection}>
-                        <Text style={styles.classText}>Meine Klasse:</Text>
-                        <Picker
-                            style={{flex: 1}}
-                            selectedValue={this.state.class}
-                            onValueChange={(c) => {
-                                setAsyncStorage("MyClass", c).done(() => {
-                                    this.setState({
-                                        class: c
-                                    }, () => {
-                                        this._onRefresh();
-                                    });
-
-                                });
-                            }}>
-                            {classes}
-                        </Picker>
-                    </View>
-                    <View style={styles.container}>
-                        {Arr}
-                    </View>
-                </ScrollView>
-            </View>);
+            <RefreshScrollView
+                url={"GetSubstituteForClass.php?class=" + this.state.class}
+                processData={this.processData}
+                refresh={(obj) => this.state.updateFunction = obj}
+                downloadOnStart={false}
+            >
+                <View style={styles.classSelection}>
+                    <Text style={styles.classText}>Meine Klasse:</Text>
+                    <Picker
+                        style={{flex: 1}}
+                        selectedValue={this.state.class}
+                        onValueChange={(className) => {
+                            setAsyncStorage("MyClass", className).done(() => {
+                                this.setState({
+                                    class: className
+                                }, this.state.updateFunction);
+                            });
+                        }}>
+                        {classes}
+                    </Picker>
+                </View>
+                <View style={styles.container}>
+                    {Arr}
+                </View>
+            </RefreshScrollView>);
     }
 }
 

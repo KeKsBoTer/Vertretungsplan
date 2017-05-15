@@ -5,6 +5,7 @@
  */
 
 import {Alert, AsyncStorage} from "react-native";
+import md5 from "md5";
 const text = require('Vertretungsplan/app/config/text');
 
 /**
@@ -15,16 +16,16 @@ const text = require('Vertretungsplan/app/config/text');
  */
 export function getData(url) {
     return new Promise((resolve, reject) => {
-        downloadData(url)
+        getAsyncStorage(url)
             .then((value) => {
-                resolve(value)
+                let hash = value ? md5(value) : undefined;
+                downloadData(url, hash)
+                    .then((content) => {
+                        resolve(content === "[]" ? value : content);
+                    })
+                    .catch(() => resolve(value))
             })
-            .catch((value) => getAsyncStorage(url) //try to get local data
-                .then((value) => {
-                    if (value) resolve(value);
-                    else reject();
-                })
-                .catch(() => reject()))
+            .catch(reject);
     });
 }
 
@@ -40,11 +41,15 @@ const isAlertOpen = [false];
  * All downloaded data is saved in the {AsyncStorage} to allow the app to display the last data in offline mode.
  * The key for the {AsyncStorage} is the url.
  * @param {String} url - the relative path to the php-file
+ * @param {String} hash - hash data string send to the server, to reduce data usage
  * @returns {Promise} An async Promise with a JSON-String as value
  */
-export function downloadData(url) {
+export function downloadData(url, hash) {
     return new Promise((resolve, reject) => {
-        fetch(text.server + url, {
+        let completeUrl = text.server + url;
+        if (hash)
+            completeUrl += (url.indexOf("?") > -1 ? "&" : "?") + "hash=" + hash;
+        fetch(completeUrl, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

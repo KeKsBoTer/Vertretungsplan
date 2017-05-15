@@ -1,8 +1,6 @@
 /**
- * Created by Simon on 25.04.2017.
- */
-/**
- * Created by Simon on 23.03.2017.
+ * @author Simon
+ * Created on 23.03.2017.
  */
 import React, {Component} from "react";
 import {AsyncStorage, ToastAndroid, View, Image, Text, TouchableHighlight, ScrollView, Linking, Clipboard} from "react-native";
