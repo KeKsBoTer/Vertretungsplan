@@ -5,15 +5,23 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {Grid, Col, Row} from 'react-native-elements'
+import moment from "moment";
 const styles = require('./styles');
+require('moment/locale/de.js');
 
 class DayTable extends Component {
+    constructor(props){
+        super(props);
+        let date = moment(this.props.date, "DD.MM.YYYY");
+        this.state={
+            date: date.format("dddd, DD.MM")
+        };
+    }
     render() {
         return (
             <View style={styles.container}>
-
                 <View style={styles.header}>
-                    <Text style={styles.title}>{this.props.date}</Text>
+                    <Text style={styles.title}>{this.state.date}</Text>
                 </View>
                 <View style={styles.wrapper}>
                     <Grid>
