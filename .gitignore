@@ -17,7 +17,6 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-.idea/workspace.xml
 .tmp/
 .watchmanconfig
 __tests__/
