@@ -56,28 +56,30 @@ class SubstituteView extends Component {
         getAsyncStorage("MyClass")
             .then((className) => {
                 if (className) {
-                    getAsyncStorage(this.props.url)
+                    getAsyncStorage("GetSubstituteForClass.php?class=" + className)
                         .then((value) => {
                             if (value)
                                 this.setState({
-                                    data: JSON.parse(value)
+                                    data: JSON.parse(value).subs
                                 });
                         });
                     this.setState({class: className});
                     setAsyncStorage("MyClass", className);
+                }
+                else {
+                    //saving default 5A as class
+                    setAsyncStorage("MyClass", this.state.class);
                 }
                 this.state.updateFunction && this.state.updateFunction();
             });
     }
 
     processData = (json) => {
-        console.log(json);
         let data = [];
         for (let v in json.subs)
             if (json.subs.hasOwnProperty(v))
                 data[v] = json.subs[v];
         this.setState({data: data});
-        setAsyncStorage("GetSubstituteForClass.php?class=last", JSON.stringify(json));
     };
 
     render() {
