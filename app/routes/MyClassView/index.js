@@ -28,6 +28,8 @@ function getClasses() {
     return classes;
 }
 
+const controllerUrl ="GetSubstituteForClass.php?class=";
+
 class MyClassView extends Component {
 
     static navigationOptions = {
@@ -56,7 +58,7 @@ class MyClassView extends Component {
         getAsyncStorage("MyClass")
             .then((className) => {
                 if (className) {
-                    getAsyncStorage("GetSubstituteForClass.php?class=" + className)
+                    getAsyncStorage(controllerUrl+ className)
                         .then((value) => {
                             if (value)
                                 this.setState({
@@ -91,7 +93,7 @@ class MyClassView extends Component {
         });
         return (
             <RefreshScrollView
-                url={"GetSubstituteForClass.php?class=" + this.state.class}
+                url={controllerUrl + this.state.class}
                 processData={this.processData}
                 refresh={(obj) => this.state.updateFunction = obj}
                 downloadOnStart={false}

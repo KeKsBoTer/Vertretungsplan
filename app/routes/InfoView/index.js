@@ -58,10 +58,10 @@ class InfoView extends Component {
     }
 
     _emptyCache = () => {
-        let message = 'Cache-Speicher wurde gelöscht';
+        let message = AppText.info_cache_delete_message;
         AsyncStorage.clear()
             .then(() => this.setState({asyncStorageSize: 0}))
-            .catch(() => message = 'Cache-Speicher konnte nicht gelöscht werden');
+            .catch(() => message = AppText.info_cache_delete_message_error);
         ToastAndroid.show(message, ToastAndroid.SHORT);
     };
 
@@ -80,7 +80,7 @@ class InfoView extends Component {
 
     _copyEmailToClipboard = () => {
         Clipboard.setString(AppText.contact_email);
-        ToastAndroid.show("Email wurde in den Zwischenspeicher Kopiert", ToastAndroid.SHORT);
+        ToastAndroid.show(AppText.info_email_to_clipboard_toast_message, ToastAndroid.SHORT);
     };
 
     _getAsyncStorageSize = () => {
@@ -107,20 +107,20 @@ class InfoView extends Component {
                     <Text style={styles.headerVersion}>v.{VersionNumber.appVersion}</Text>
                 </View>
 
-                <Text style={styles.title}>{AppText.settings_feedback}</Text>
-                <ListItem text={AppText.settings_rate_app} onPress={this._openPlayStoreEntry}/>
-                <Text style={styles.info}>{AppText.settings_rate_app_info}</Text>
+                <Text style={styles.title}>{AppText.info_feedback}</Text>
+                <ListItem text={AppText.info_rate_app} onPress={this._openPlayStoreEntry}/>
+                <Text style={styles.info}>{AppText.info_rate_app_info}</Text>
 
-                <Text style={styles.title}>{AppText.settings_contact}</Text>
-                <ListItem group="first" text={AppText.settings_contact_dev} onPress={this._openEmail}/>
+                <Text style={styles.title}>{AppText.info_contact}</Text>
+                <ListItem group="first" text={AppText.info_contact_dev} onPress={this._openEmail}/>
                 <ListItem group="last" text={AppText.contact_email} onPress={this._copyEmailToClipboard}/>
-                <Text style={styles.info}>{AppText.settings_contact_info}</Text>
+                <Text style={styles.info}>{AppText.info_contact_info}</Text>
 
-                <ListItem text={AppText.settings_open_in_browser} onPress={this._openDHGVplan}/>
-                <Text style={styles.info}>{AppText.settings_open_in_browser_info}</Text>
+                <ListItem text={AppText.info_open_in_browser} onPress={this._openDHGVplan}/>
+                <Text style={styles.info}>{AppText.info_open_in_browser_info}</Text>
 
-                <ListItem text={AppText.settings_clear_cache+" (" + this.state.asyncStorageSize + " Kb)"} color="red" onPress={this._emptyCache}/>
-                <Text style={styles.info}>{AppText.settings_clear_cache_info}</Text>
+                <ListItem text={AppText.info_clear_cache+" (" + this.state.asyncStorageSize + " Kb)"} color="red" onPress={this._emptyCache}/>
+                <Text style={styles.info}>{AppText.info_clear_cache_info}</Text>
             </ScrollView>
         );
     }
