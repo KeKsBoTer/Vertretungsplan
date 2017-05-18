@@ -1,10 +1,15 @@
 /**
  * Created by Simon on 23.03.2017.
+ * File to globally manage all displayed text
  */
 //TODO separate displayed text and app strings like internal links
 module.exports = {
     appName: "Vertretungsplan",
     server: "http://kleinkindergottesdienst-aichach.de/vplan/",
+    view_title_my_class: "Meine Klasse",
+    view_title_all_classes: "Alle Klassen",
+    view_title_calendar: "Kalender",
+    view_title_info: "Info",
     settings_contact: "KONTAKT",
     settings_contact_dev:"Kontaktiere die Entwickler",
     contact_email:"dotcookiedev@gmail.com",

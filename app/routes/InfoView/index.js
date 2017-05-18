@@ -6,10 +6,10 @@ import React, {Component} from "react";
 import {AsyncStorage, ToastAndroid, View, Image, Text, TouchableHighlight, ScrollView, Linking, Clipboard} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import VersionNumber from 'react-native-version-number';
+import {byteLength} from "Vertretungsplan/app/utils";
 const AppText = require('Vertretungsplan/app/config/text');
 const styles = require("./styles");
 const img = require('./icon.png');
-import {byteLength} from "Vertretungsplan/app/utils";
 
 
 //TODO Pack ListItem in own file and separate styling
@@ -31,14 +31,14 @@ class ListItem extends Component {
     }
 }
 
-class SettingsView extends Component {
+class InfoView extends Component {
 
     static navigationOptions = {
-        title: 'Einstellungen',
+        title: AppText.view_title_info,
         tabBar: {
             icon: ({tintColor, focused}) => (
                 <Ionicons
-                    name={focused ? 'ios-cog' : 'ios-cog-outline'}
+                    name={focused ? 'ios-information-circle' : 'ios-information-circle-outline'}
                     size={26}
                     style={{color: tintColor}}
                 />
@@ -126,4 +126,4 @@ class SettingsView extends Component {
     }
 }
 
-module.exports = SettingsView;
+module.exports = InfoView;

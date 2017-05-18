@@ -9,16 +9,17 @@ import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
 import {getData,getAsyncStorage} from "Vertretungsplan/app/utils";
 
 const styles = require("./styles");
+const text = require("Vertretungsplan/app/config/text");
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-class ClassView extends Component {
+class AllClassesView extends Component {
 
     static navigationOptions = {
-        title: 'Alle Klassen',
+        title: text.view_title_all_classes,
         tabBar: {
             icon: ({tintColor, focused}) => (
                 <Ionicons
-                    name={focused ? 'ios-bookmarks' : 'ios-bookmarks-outline'}
+                    name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
                     size={26}
                     style={{color: tintColor}}
                 />
@@ -123,4 +124,4 @@ class ClassView extends Component {
     }
 }
 
-module.exports = ClassView;
+module.exports = AllClassesView;

@@ -23,7 +23,7 @@ class ClassListItem extends Component {
         return (
             <View>
                 <TouchableHighlight
-                    onPress={() => this.props.navigation.navigate('ClassView', { class: this.props.klasse })}>
+                    onPress={() => this.props.navigation.navigate('AllClassesView', { class: this.props.klasse })}>
                     <View style={styles.container}>
                         <Svg height="111" width="6">
                             <Defs>

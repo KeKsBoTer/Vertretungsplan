@@ -8,7 +8,7 @@ import DayTable from "Vertretungsplan/app/components/DayTable";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
 import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
-
+const AppText = require("Vertretungsplan/app/config/text");
 const styles = require("./styles");
 
 /**
@@ -28,10 +28,10 @@ function getClasses() {
     return classes;
 }
 
-class SubstituteView extends Component {
+class MyClassView extends Component {
 
     static navigationOptions = {
-        title: 'Meine Klasse',
+        title: AppText.view_title_my_class,
         tabBar: {
             icon: ({tintColor, focused}) => (
                 <Ionicons
@@ -118,4 +118,4 @@ class SubstituteView extends Component {
     }
 }
 
-module.exports = SubstituteView;
+module.exports = MyClassView;

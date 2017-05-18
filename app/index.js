@@ -6,18 +6,18 @@
 
 import React from "react";
 import {StackNavigator, TabNavigator} from "react-navigation";
-import SubstituteView from "Vertretungsplan/app/routes/SubstituteView/index";
-import DateView from "Vertretungsplan/app/routes/DateView/index";
-import ClassView from "Vertretungsplan/app/routes/ClassListView/index";
+import MyClassView from "Vertretungsplan/app/routes/MyClassView/index";
+import DateView from "Vertretungsplan/app/routes/CalendarView/index";
+import AllClassesView from "Vertretungsplan/app/routes/AllClassesView/index";
 import SubViewItem from "Vertretungsplan/app/components/SubViewItem/index";
-import SettingsView from "Vertretungsplan/app/routes/SettingsView/index";
+import InfoView from "Vertretungsplan/app/routes/InfoView/index";
 const styles = require('./styles');
 
 const MainScreenNavigator = TabNavigator({
-    MyClass: {screen: SubstituteView},
-    AllClasses: {screen: ClassView},
+    MyClass: {screen: MyClassView},
+    AllClasses: {screen: AllClassesView},
     Calendar: {screen: DateView},
-    Settings: {screen: SettingsView}
+    Info: {screen: InfoView}
 }, {
     tabBarPosition: 'bottom',
     swipeEnabled: false,
@@ -55,12 +55,9 @@ const App = StackNavigator({
     Home: {
         screen: MainScreenNavigator
     },
-    ClassView: {
+    AllClassesView: {
         screen: SubViewItem
-    },
-    Settings: {
-        screen: SettingsView
-    },
+    }
 }, {
     cardStyle: {
         backgroundColor: '#cacaca'

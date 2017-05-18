@@ -10,11 +10,13 @@ import {View} from "react-native";
 import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
 import DayTable from "Vertretungsplan/app/components/DayTable";
 
+const text = require("Vertretungsplan/app/config/text");
 const styles = require('./styles');
-class DateView extends Component {
+
+class CalendarView extends Component {
 
     static navigationOptions = {
-        title: 'Kalender',
+        title: text.view_title_calendar,
         tabBar: {
             icon: ({tintColor, focused}) => (
                 <Ionicons
@@ -64,4 +66,4 @@ class DateView extends Component {
         )
     }
 }
-module.exports = DateView;
+module.exports = CalendarView;

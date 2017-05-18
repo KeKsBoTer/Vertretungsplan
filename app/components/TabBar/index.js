@@ -5,9 +5,9 @@
 import React, {Component} from 'react';
 import {Icon, Tabs, Tab} from 'react-native-elements'
 import ClassView from "Vertretungsplan/app/routes/ClassListView/index";
-import DateView from "Vertretungsplan/app/routes/DateView/index";
-import SubstituteView from "Vertretungsplan/app/routes/SubstituteView/index";
-import SettingsView from "Vertretungsplan/app/routes/SettingsView/index";
+import DateView from "Vertretungsplan/app/routes/CalendarView/index";
+import SubstituteView from "Vertretungsplan/app/routes/MyClassView/index";
+import SettingsView from "Vertretungsplan/app/routes/InfoView/index";
 const styles = require("./styles");
 
 const {selectedTab} = 'byClass';
