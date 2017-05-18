@@ -65,12 +65,16 @@ class SettingsView extends Component {
         ToastAndroid.show(message, ToastAndroid.SHORT);
     };
 
+    _openPlayStoreEntry= () =>{
+        Linking.openURL("https://play.google.com/store/apps/details?id=com.dotcookie.vertretungsplan").catch(err => console.log('An error occurred', err));
+    };
+
     _openDHGVplan = () => {
-        Linking.openURL("https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php").catch(err => console.error('An error occurred', err));
+        Linking.openURL("https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php").catch(err => console.log('An error occurred', err));
     };
 
     _openEmail = () => {
-        Linking.openURL("mailto:simon.niedermayr@gmx.com?").catch(err => console.error('An error occurred', err));
+        Linking.openURL("mailto:simon.niedermayr@gmx.com?").catch(err => console.log('An error occurred', err));
     };
 
 
@@ -102,12 +106,19 @@ class SettingsView extends Component {
                     <Text style={styles.headerText}>{AppText.appName}</Text>
                     <Text style={styles.headerVersion}>v.{VersionNumber.appVersion}</Text>
                 </View>
+
+                <Text style={styles.title}>{AppText.settings_feedback}</Text>
+                <ListItem text={AppText.settings_rate_app} onPress={this._openPlayStoreEntry}/>
+                <Text style={styles.info}>{AppText.settings_rate_app_info}</Text>
+
                 <Text style={styles.title}>{AppText.settings_contact}</Text>
                 <ListItem group="first" text={AppText.settings_contact_dev} onPress={this._openEmail}/>
                 <ListItem group="last" text={AppText.contact_email} onPress={this._copyEmailToClipboard}/>
                 <Text style={styles.info}>{AppText.settings_contact_info}</Text>
+
                 <ListItem text={AppText.settings_open_in_browser} onPress={this._openDHGVplan}/>
                 <Text style={styles.info}>{AppText.settings_open_in_browser_info}</Text>
+
                 <ListItem text={AppText.settings_clear_cache+" (" + this.state.asyncStorageSize + " Kb)"} color="red" onPress={this._emptyCache}/>
                 <Text style={styles.info}>{AppText.settings_clear_cache_info}</Text>
             </ScrollView>

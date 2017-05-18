@@ -24,7 +24,7 @@ const MainScreenNavigator = TabNavigator({
     lazyLoad: false,
     lazy: false,
     backBehavior: 'none',
-    animationEnabled: true,
+    animationEnabled: false,
     tabBarOptions: {
         upperCaseLabel: false,
         activeTintColor: '#007cff',
