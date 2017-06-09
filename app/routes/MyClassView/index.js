@@ -3,11 +3,10 @@
  * @author S. Niedermayr
  */
 import React, {Component} from "react";
-import {View, Picker, Text} from "react-native";
+import {View, Picker, FlatList, Text} from "react-native";
 import DayTable from "Vertretungsplan/app/components/DayTable";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
-import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
 const AppText = require("Vertretungsplan/app/config/text");
 const styles = require("./styles");
 
@@ -28,21 +27,19 @@ function getClasses() {
     return classes;
 }
 
-const controllerUrl ="GetSubstituteForClass.php?class=";
+const controllerUrl = "GetSubstituteForClass.php?class=";
 
 class MyClassView extends Component {
 
     static navigationOptions = {
         title: AppText.view_title_my_class,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-person' : 'ios-person-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-person' : 'ios-person-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {
@@ -50,25 +47,40 @@ class MyClassView extends Component {
         this.state = {
             class: "5A",
             data: [],
+            refreshing:false,
             updateFunction: null
         };
     }
 
+    processData = (json) => {
+        let arr = [];
+        for (let date in json["subs"])
+            arr.push({date: date, subs: json["subs"][date]["subs"]});
+        this.setState({data: arr});
+    };
+
+    _keyExtractor = (item, index) => index;
+
+    _renderItem = ({item, index}) => {
+        return (
+            <DayTable date={item["date"]} subs={item["subs"]}/>)
+    };
+
+    _onRefresh = () => {
+        this.setState(
+            {refreshing: true},
+            () => getData("GetSubstituteForClass.php?class=" + this.state.class)
+                .then((value) => this.processData(JSON.parse(value)))
+                .done(()=>this.setState({refreshing: false}))
+        )
+        ;
+    };
+
     componentWillMount() {
         getAsyncStorage("MyClass")
             .then((className) => {
-                if (className) {
-                    getAsyncStorage(controllerUrl+ className)
-                        .then((value) => {
-                            if (value)
-                                this.setState({
-                                    data: JSON.parse(value).subs
-                                });
-                        });
-                    this.setState({class: className});
-                    setAsyncStorage("MyClass", className);
-                }
-                else {
+                this.setState({class: className}, () => this._onRefresh());
+                if (!className) {
                     //saving default 5A as class
                     setAsyncStorage("MyClass", this.state.class);
                 }
@@ -76,47 +88,36 @@ class MyClassView extends Component {
             });
     }
 
-    processData = (json) => {
-        let data = [];
-        for (let v in json.subs)
-            if (json.subs.hasOwnProperty(v))
-                data[v] = json.subs[v];
-        this.setState({data: data});
-    };
-
     render() {
-        let Arr = [];
-        for (let k in this.state.data)
-            Arr.push(<DayTable key={k} date={k} subs={this.state.data[k].subs}/>);
         let classes = getClasses().map((c) => {
             return <Picker.Item key={c} value={c} label={c}/>
         });
-        return (
-            <RefreshScrollView
-                url={controllerUrl + this.state.class}
-                processData={this.processData}
-                refresh={(obj) => this.state.updateFunction = obj}
-                downloadOnStart={false}
-            >
+        return (<FlatList
+            data={this.state.data}
+            extraData={this.state}
+            keyExtractor={this._keyExtractor}
+            renderItem={this._renderItem}
+            removeClippedSubviews={false}
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+            ListHeaderComponent={() => (
                 <View style={styles.classSelection}>
                     <Text style={styles.classText}>Meine Klasse:</Text>
                     <Picker
                         style={{flex: 1}}
                         selectedValue={this.state.class}
                         onValueChange={(className) => {
-                            setAsyncStorage("MyClass", className).done(() => {
-                                this.setState({
-                                    class: className
-                                }, this.state.updateFunction);
-                            });
+                            this.setState({
+                                class: className
+                            },()=>this._onRefresh());
+                            setAsyncStorage("MyClass", className);
                         }}>
                         {classes}
                     </Picker>
                 </View>
-                <View style={styles.container}>
-                    {Arr}
-                </View>
-            </RefreshScrollView>);
+            )}
+            ListFooterComponent={() => this.state.data.length!==0?(<View style={styles.footer}/>):(<Text style={styles.empty}>{"Keine Vertrtungen für Klasse "+this.state.class+" vorhanden"}</Text>)}
+        />)
     }
 }
 

@@ -5,7 +5,8 @@
 //TODO separate displayed text and app strings like internal links
 module.exports = {
     appName: "Vertretungsplan",
-    server: "http://kleinkindergottesdienst-aichach.de/vplan/",
+    //server: "http://kleinkindergottesdienst-aichach.de/vplan/",
+    server: "http://192.168.0.102/",
     view_title_my_class: "Meine Klasse",
     view_title_all_classes: "Alle Klassen",
     view_title_calendar: "Kalender",

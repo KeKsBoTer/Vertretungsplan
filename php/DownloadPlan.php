@@ -6,19 +6,37 @@
  * Time: 00:39
  */
 require('simple_html_dom.php');
-function getSubstitutePlan()
-{
-    function clean($str)
-    {
-        $str = utf8_decode($str);
-        html_entity_decode($str);
-        $str = str_replace("&nbsp;", "", $str);
-        $str = preg_replace("/\s+/", " ", $str);
-        $str = trim($str);
-        $str = html_entity_decode($str);
-        return $str;
-    }
 
+
+function classCmp($a, $b)
+{
+    $alen = strlen($a);
+    $blen = strlen($b);
+    if ($alen != $blen)
+        return $alen > $blen;
+    $anum = intval(preg_replace("/[^0-9,.]/", "", $a));
+    $bnum = intval(preg_replace("/[^0-9,.]/", "", $b));
+    if ($anum == $bnum) {
+        $ac = preg_replace("/[0-9]+/", "", $a);
+        $bc = preg_replace("/[0-9]+/", "", $b);
+        return strnatcmp($ac, $bc);
+    }
+    return $a > $b;
+}
+
+function clean($str)
+{
+    $str = utf8_decode($str);
+    html_entity_decode($str);
+    $str = str_replace("&nbsp;", "", $str);
+    $str = preg_replace("/\s+/", " ", $str);
+    $str = trim($str);
+    $str = html_entity_decode($str);
+    return $str;
+}
+
+
+function downloadPlan(){
 
     $html = file_get_html('https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php');
 
@@ -70,5 +88,14 @@ function getSubstitutePlan()
         $element["subs"] = $subs;
         $json[] = $element;
     }
+    $file = fopen("./data.json", "w") or die("Unable to open file!");
+    fwrite($file, json_encode($json));
+    fclose($file);
+}
+
+function getSubstitutePlan()
+{
+    $string = file_get_contents("./data.json");
+    $json = json_decode($string, true);
     return $json;
 }

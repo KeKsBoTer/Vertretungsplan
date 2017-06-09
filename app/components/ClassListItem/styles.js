@@ -9,41 +9,43 @@ const {
 
 module.exports = StyleSheet.create({
     container: {
+        borderRadius: 5,
+        margin: 10,
+        marginBottom: 0,
+        backgroundColor: "rgba(255,255,255,.5)"
+    },
+    header: {
         flexDirection: 'row',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginBottom: 0,
+    },
+    highlight: {
+        flex: 1,
+        borderRadius: 5
+    },
+    touched: {
+        transform: [{scale: .95}]
     },
     wrapper: {
         flex: 1,
         paddingVertical: 17,
         paddingHorizontal: 12,
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#a8a8a8'
+        flexDirection: 'row'
     },
     vBox: {
         paddingLeft: 17,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center'
-    },
-    indicator: {
-        //backgroundColor: 'black',
-        width: 6,
-        margin: -3,
-        padding: 0
     },
     infoText: {
         fontSize: 17
     },
-    expandContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    header: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    classContainer: {
-        padding: 10
+    filler: {
+        backgroundColor: 'grey',
+        opacity: 0.2,
+        height: 15,
+        marginBottom: 7
     }
 });

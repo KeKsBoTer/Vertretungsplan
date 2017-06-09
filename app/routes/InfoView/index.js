@@ -3,7 +3,17 @@
  * Created on 23.03.2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, ToastAndroid, View, Image, Text, TouchableHighlight, ScrollView, Linking, Clipboard} from "react-native";
+import {
+    AsyncStorage,
+    ToastAndroid,
+    View,
+    Image,
+    Text,
+    TouchableHighlight,
+    ScrollView,
+    Linking,
+    Clipboard
+} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import VersionNumber from 'react-native-version-number';
 import {byteLength} from "Vertretungsplan/app/utils";
@@ -20,7 +30,8 @@ class ListItem extends Component {
                 <View
                     style={[styles.listItem, this.props.group ? styles.group : "", this.props.group === "last" ? styles.last : "", this.props.group === "first" ? styles.first : ""]}>
                     <View style={styles.wrapper}>
-                        <Text style={[styles.text, {color: this.props.color ? this.props.color : "black"}]}>{this.props.text}</Text>
+                        <Text
+                            style={[styles.text, {color: this.props.color ? this.props.color : "black"}]}>{this.props.text}</Text>
                     </View>
                     {this.props.group && this.props.group !== "last" &&
                     <View style={styles.separator}>{}</View>
@@ -35,15 +46,13 @@ class InfoView extends Component {
 
     static navigationOptions = {
         title: AppText.view_title_info,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-information-circle' : 'ios-information-circle-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-information-circle' : 'ios-information-circle-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {
@@ -65,7 +74,7 @@ class InfoView extends Component {
         ToastAndroid.show(message, ToastAndroid.SHORT);
     };
 
-    _openPlayStoreEntry= () =>{
+    _openPlayStoreEntry = () => {
         Linking.openURL("https://play.google.com/store/apps/details?id=com.dotcookie.vertretungsplan").catch(err => console.log('An error occurred', err));
     };
 
@@ -119,7 +128,8 @@ class InfoView extends Component {
                 <ListItem text={AppText.info_open_in_browser} onPress={this._openDHGVplan}/>
                 <Text style={styles.info}>{AppText.info_open_in_browser_info}</Text>
 
-                <ListItem text={AppText.info_clear_cache+" (" + this.state.asyncStorageSize + " Kb)"} color="red" onPress={this._emptyCache}/>
+                <ListItem text={AppText.info_clear_cache + " (" + this.state.asyncStorageSize + " Kb)"} color="red"
+                          onPress={this._emptyCache}/>
                 <Text style={styles.info}>{AppText.info_clear_cache_info}</Text>
             </ScrollView>
         );

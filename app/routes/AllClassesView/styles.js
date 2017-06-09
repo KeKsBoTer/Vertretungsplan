@@ -8,7 +8,7 @@ const {
 } = React;
 
 module.exports = StyleSheet.create({
-    container: {
-        padding: 10
+    footer:{
+        marginTop:10
     }
 });

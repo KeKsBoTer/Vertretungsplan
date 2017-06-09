@@ -2,20 +2,17 @@
  * Created by Simon on 22.04.2017.
  */
 import React, {Component} from "react";
-import {View, ScrollView, Dimensions, Button} from "react-native";
-import * as Progress from 'react-native-progress';
+import {View, FlatList} from "react-native";
 import DayTable from "Vertretungsplan/app/components/DayTable";
-import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
 import {getData, getAsyncStorage} from "Vertretungsplan/app/utils";
-import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
 
 const styles = require("./styles");
 
 class SubstituteView extends Component {
 
-    static navigationOptions = {
-        title: ({state}) => "Klasse " + state.params.class,
-    };
+    static navigationOptions = ({navigation}) => ({
+        title: "Klasse " + navigation.state.params.class,
+    });
 
     constructor(props) {
         super(props);
@@ -24,24 +21,42 @@ class SubstituteView extends Component {
         };
     }
 
+    componentWillMount() {
+        this._onRefresh();
+    }
+
     processData = (json) => {
-        this.setState({data: json.subs});
+        let arr =[];
+        for(let date in json["subs"])
+            arr.push({date:date,subs:json["subs"][date]["subs"]});
+        this.setState({data: arr});
+    };
+
+    _keyExtractor = (item, index) => index;
+
+    _renderItem = ({item,index}) => {
+        return (
+            <DayTable date={item["date"]} subs={item["subs"]}/>)
+    };
+
+    _onRefresh = () => {
+        this.setState(
+            {refreshing: true},
+            () => getData("GetSubstituteForClass.php?class=" + this.props.navigation.state.params.class)
+                .then((value) => this.processData(JSON.parse(value)))
+                .done()
+        )
+        ;
     };
 
     render() {
-        let Arr = [];
-        for (let k in this.state.data)
-            Arr.push(<DayTable key={k} date={k} subs={this.state.data[k].subs}/>);
-        return (
-            <RefreshScrollView
-                url={"GetSubstituteForClass.php?class=" + this.props.navigation.state.params.class}
-                processData={this.processData}
-                downloadOnMount={true}
-            >
-                <View style={styles.container}>
-                    {Arr}
-                </View>
-            </RefreshScrollView>);
+        return (<FlatList
+            data={this.state.data}
+            extraData={this.state}
+            keyExtractor={this._keyExtractor}
+            renderItem={this._renderItem}
+            ListFooterComponent={() => (<View style={styles.footer}/>)}
+        />)
     }
 }
 

@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,Animated} from 'react-native';
 import {Grid, Col, Row} from 'react-native-elements'
 import moment from "moment";
 const styles = require('./styles');
@@ -14,12 +14,24 @@ class DayTable extends Component {
         super(props);
         let date = moment(this.props.date, "DD.MM.YYYY");
         this.state={
-            date: date.format("dddd, DD.MM")
+            date: date.format("dddd, DD.MM"),
+            fadeAnim: new Animated.Value(0)
         };
     }
+
+    componentDidMount() {
+        Animated.timing(
+            this.state.fadeAnim,
+            {
+                toValue: 1,
+                duration: 200,
+            }
+        ).start();
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <Animated.View style={[styles.container,{opacity: this.state.fadeAnim}]}>
                 <View style={styles.header}>
                     <Text style={styles.title}>{this.state.date}</Text>
                 </View>
@@ -63,7 +75,7 @@ class DayTable extends Component {
                             })}
                     </Grid>
                 </View>
-            </View>
+            </Animated.View>
         )
     };
 }

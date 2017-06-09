@@ -2,125 +2,115 @@
  * Created by Simon on 23.03.2017.
  */
 import React, {Component} from "react";
-import {View, ListView, RefreshControl, NetInfo} from "react-native";
+import {View, FlatList, Button, AsyncStorage} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ClassListItem from "Vertretungsplan/app/components/ClassListItem";
-import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
-import {getData,getAsyncStorage} from "Vertretungsplan/app/utils";
+import {getData, getAsyncStorage} from "Vertretungsplan/app/utils";
 
 const styles = require("./styles");
 const text = require("Vertretungsplan/app/config/text");
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+function createEmpty(amount, json) {
+    let array = [];
+    for (let i = 0; i < amount; i++) {
+        array.push({class: json ? json[i] : "", day: 0, week: 0, all: 0});
+    }
+    return array;
+}
+let opened = false;
+//const ds = new FlatList.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 class AllClassesView extends Component {
 
     static navigationOptions = {
         title: text.view_title_all_classes,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            isRefreshing: false,
-            dataSource: ds.cloneWithRows([]),
-            class: "5A"
+            data: createEmpty(5),
+            refreshing: false
         };
     }
 
-    initView = () => {
-        setTimeout(this._onRefresh, 10);
-        NetInfo.removeEventListener(
-            'change',
-            this.initView
-        );
-    };
-
     componentDidMount() {
-        getAsyncStorage("GetSubstituteCountForClass.php")
-            .then((data) => this.updateState(data, false))
-            .done();
-        NetInfo.addEventListener(
-            'change',
-            this.initView
-        );
+        this._onRefresh()
     };
 
-
-    updateState = (text, finishLoading = true) => {
-        if (text) {
-            let json = JSON.parse(text);
-            let array = [];
-            for (let item in json)
+    _loadClasses = (data) => {
+        try {
+            let json = JSON.parse(data);
+            this.setState({data: createEmpty(json.length, json)});
+            let i = 0;
+            for (let item in json) {
                 if (json.hasOwnProperty(item))
-                    array.push(item);
-            this.setState({
-                data: json,
-                dataSource: ds.cloneWithRows(array),
-                isRefreshing: !finishLoading
-            });
+                    getData("GetSubstituteCount.php?class=" + json[item])
+                        .then((response) => {
+                            let count = JSON.parse(response);
+                            let array = this.state.data.slice();
+                            array[item] = ({class: json[item], day: count.day, week: count.week, all: count.all});
+                            this.setState({data: array});
+                            i++;
+                            if (i === json.length)
+                                this.setState({refreshing: false});
+                        })
+                        .catch((e) => this.setState({refreshing: false}))
+            }
+        } catch (e) {
         }
     };
 
     _onRefresh = () => {
-        this.setState({isRefreshing: true});
-        getData("GetSubstituteCountForClass.php")
-            .then((value) => this.updateState(value))
+        this.setState({refreshing: true});
+        getData("GetAvailableClasses.php")
+            .then((value) => this._loadClasses(value))
             .done();
     };
 
-    _toggleView = (e) => {
-        this.setState({
-            showSubs: !this.state.showSubs,
-            class: e
-        });
+    _keyExtractor = (item, index) => index;
+
+    _renderItem = ({item}) => {
+        let index = this.state.data.indexOf(item),
+            max = this.state.data.length;
+        return (
+            <ClassListItem
+                klasse={item.class}
+                navigation={this.props.navigation}
+                day={item.day}
+                week={item.week}
+                all={item.all}
+                startPer={parseInt(-max * 30 * index)}
+                endPer={parseInt((max - (index + 1)) * max * 30)}
+                onPress={(obj) => {
+                    if (!opened) {
+                        opened = true;
+                        this.props.navigation.navigate('ClassView', {class: item.class});
+                        setTimeout(() => opened = false, 100) //prevent user from navigating twice
+                    }
+                }}
+            />)
     };
 
     render() {
-        let i = 0;
-        let max = 0;
-        //counting children
-        for (let item in this.state.data) max++;
-        let _listView: ListView;
         return (
-            <View>
-                {this.state.isRefreshing &&
-                <ProgressBar />
-                }
-                <ListView
-                    enableEmptySections={true}
-                    ref={(scrollView) => {
-                        _listView = scrollView;
-                    }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this._onRefresh}
-                            title="Loading..."
-                        />
-                    }
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData) => <ClassListItem
-                        callback={() => {
-                            this._toggleView(rowData)
-                        }}
-                        klasse={rowData}
-                        navigation={this.props.navigation}
-                        day={this.state.data[rowData].day} week={this.state.data[rowData].week} all={this.state.data[rowData].all}
-                        startPer={parseInt(-max * 10 * i)}
-                        endPer={parseInt((max - (++i)) * max * 10)}/>
-                    }/>
-            </View>
-        );
+            <FlatList
+                ref="list"
+                data={this.state.data}
+                extraData={this.state}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderItem}
+                onRefresh={this._onRefresh}
+                refreshing={this.state.refreshing}
+                ListFooterComponent={() => (<View style={styles.footer}/>)}
+            />);
+        // ListHeaderComponent={() => (<Button title="Clear Cache" onPress={() => AsyncStorage.clear()}/>)}
     }
 }
 

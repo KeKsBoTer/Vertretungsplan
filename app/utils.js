@@ -16,16 +16,22 @@ const text = require('Vertretungsplan/app/config/text');
  */
 export function getData(url) {
     return new Promise((resolve, reject) => {
-        getAsyncStorage(url)
-            .then((value) => {
-                let hash = value ? md5(value) : undefined;
-                downloadData(url, hash)
-                    .then((content) => {
-                        resolve(content === "[]" ? value : content);
-                    })
-                    .catch(() => resolve(value))
+        downloadData(url, "")
+            .then((content) => {
+                resolve(content);
             })
-            .catch(reject);
+            .catch((error) => reject(error))
+        /* getAsyncStorage(url)
+         .then((value) => {
+         let hash = value ? md5(value) : undefined;
+         downloadData(url, hash)
+         .then((content) => {
+         resolve(content === "[]" ? value : content);
+         })
+         .catch(() => resolve(value))
+         })
+         .catch(reject);
+         */
     });
 }
 
@@ -44,6 +50,7 @@ const isAlertOpen = [false];
  * @param {String} hash - hash data string send to the server, to reduce data usage
  * @returns {Promise} An async Promise with a JSON-String as value
  */
+const showError = false;
 export function downloadData(url, hash) {
     return new Promise((resolve, reject) => {
         let completeUrl = text.server + url;
@@ -51,21 +58,21 @@ export function downloadData(url, hash) {
             completeUrl += (url.indexOf("?") > -1 ? "&" : "?") + "hash=" + hash;
         fetch(completeUrl, {
             method: 'GET',
-            headers: {
-                Accept: 'application/json',
-            }
+            /*headers: {
+             Accept: 'application/json',
+             }*/
         }).then((response) => {
             setTimeout(() => null, 0); //for debugging in chrome
             if (response._bodyText) {
-                if(response._bodyText!=="[]")
-                    setAsyncStorage(url, response._bodyText).done(); //save downloaded data
+                if (response._bodyText !== "[]")
+                    setAsyncStorage(url, response._bodyText); //save downloaded data
                 resolve(response._bodyText);
             } else {
                 throw -1 //throw error and continue to catch if body is empty
             }
         }).catch((error) => {
             reject(error);
-            if (!isAlertOpen[0]) { //preventing app from showing the same error multiple times
+            if (showError && !isAlertOpen[0]) { //preventing app from showing the same error multiple times
                 isAlertOpen[0] = true;
                 Alert.alert(
                     'Fehler',
@@ -78,7 +85,7 @@ export function downloadData(url, hash) {
                     {cancelable: false}
                 );
             }
-        });
+        }).done();
     });
 }
 

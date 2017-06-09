@@ -17,15 +17,13 @@ class CalendarView extends Component {
 
     static navigationOptions = {
         title: text.view_title_calendar,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {

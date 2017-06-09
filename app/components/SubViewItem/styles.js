@@ -21,15 +21,18 @@ module.exports = StyleSheet.create({
     classSelection: {
         margin: 10,
         paddingLeft: 10,
-        marginBottom:0,
+        marginBottom: 0,
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "white",
         borderRadius: 5,
         opacity: 0.7
     },
-    classText:{
+    classText: {
         fontSize: 17,
         color: "black"
+    },
+    footer: {
+        height: 10
     }
 });

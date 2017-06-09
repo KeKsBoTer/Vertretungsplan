@@ -17,12 +17,12 @@ const MainScreenNavigator = TabNavigator({
     MyClass: {screen: MyClassView},
     AllClasses: {screen: AllClassesView},
     Calendar: {screen: DateView},
-    Info: {screen: InfoView}
+    Info: {screen: InfoView},
 }, {
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     lazyLoad: false,
-    lazy: false,
+    lazy: true, //only loads data when tab is focused
     backBehavior: 'none',
     animationEnabled: false,
     tabBarOptions: {
@@ -55,7 +55,7 @@ const App = StackNavigator({
     Home: {
         screen: MainScreenNavigator
     },
-    AllClassesView: {
+    ClassView: {
         screen: SubViewItem
     }
 }, {
@@ -63,10 +63,8 @@ const App = StackNavigator({
         backgroundColor: '#cacaca'
     },
     navigationOptions: {
-        header: ({navigate}) => ({
-            style: styles.header,
-            titleStyle: styles.headerLabel
-        })
+        headerStyle:styles.header,
+        headerTitleStyle: styles.headerLabel
     }
 });
 

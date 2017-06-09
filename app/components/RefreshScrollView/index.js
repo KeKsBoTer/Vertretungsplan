@@ -9,7 +9,7 @@
  */
 
 import React, {Component} from "react";
-import {View, RefreshControl, ScrollView} from "react-native";
+import {View, FlatList} from "react-native";
 import ProgressBar from "Vertretungsplan/app/components/ProgressBar";
 import {getData, getAsyncStorage} from "Vertretungsplan/app/utils";
 
@@ -40,7 +40,7 @@ class RefreshScrollView extends Component {
             //process function is called with json as argument
             json && this.props.processData && this.props.processData(json);
             this.setState({
-                isRefreshing: !finishLoading
+                refreshing: !finishLoading
             });
         } catch (e) {
         }
@@ -48,10 +48,10 @@ class RefreshScrollView extends Component {
 
     _onRefresh = () => {
         this.setState(
-            {isRefreshing: true},
+            {refreshing: true},
             () => getData(this.props.url)
                 .then((value) => value && this.updateState(value))
-                .catch(() => this.setState({isRefreshing: false}))
+                .catch(() => this.setState({refreshing: false}))
                 .done()
         );
     };
@@ -59,17 +59,15 @@ class RefreshScrollView extends Component {
     render() {
         return (
             <View>
-                {this.state.isRefreshing && <ProgressBar/>}
-                <ScrollView
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this._onRefresh}
-                            title="Loading..."
-                        />
-                    }>
-                    {this.props.children}
-                </ScrollView>
+                {this.state.refreshing && <ProgressBar/>}
+                <FlatList
+                    data={this.props.data}
+                    extraData={this.state}
+                    onRefresh={this._onRefresh}
+                    refreshing={true}
+                    keyExtractor={this.props.keyExtractor}
+                    renderItem={this.props.renderItem}
+                />
             </View>
         );
     }
