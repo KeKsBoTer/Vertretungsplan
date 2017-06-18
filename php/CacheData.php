@@ -7,3 +7,4 @@
  */
 require('DownloadPlan.php');
 downloadPlan();
+echo "success";

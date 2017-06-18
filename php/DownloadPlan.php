@@ -10,13 +10,13 @@ require('simple_html_dom.php');
 
 function classCmp($a, $b)
 {
-    $alen = strlen($a);
-    $blen = strlen($b);
-    if ($alen != $blen)
-        return $alen > $blen;
-    $anum = intval(preg_replace("/[^0-9,.]/", "", $a));
-    $bnum = intval(preg_replace("/[^0-9,.]/", "", $b));
-    if ($anum == $bnum) {
+    $aLen = strlen($a);
+    $bLen = strlen($b);
+    if ($aLen != $bLen)
+        return $aLen > $bLen;
+    $aNum = intval(preg_replace("/[^0-9,.]/", "", $a));
+    $bNum = intval(preg_replace("/[^0-9,.]/", "", $b));
+    if ($aNum == $bNum) {
         $ac = preg_replace("/[0-9]+/", "", $a);
         $bc = preg_replace("/[0-9]+/", "", $b);
         return strnatcmp($ac, $bc);
@@ -36,7 +36,8 @@ function clean($str)
 }
 
 
-function downloadPlan(){
+function downloadPlan()
+{
 
     $html = file_get_html('https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php');
 
@@ -86,10 +87,14 @@ function downloadPlan(){
             );
         }
         $element["subs"] = $subs;
-        $json[] = $element;
+        if (count($element["subs"]) > 0)
+            $json[] = $element;
     }
     $file = fopen("./data.json", "w") or die("Unable to open file!");
+    $file2 = fopen("./test.json", "w") or die("Unable to open file!");
     fwrite($file, json_encode($json));
+    date_default_timezone_set('Europe/Berlin');
+    fwrite($file2, date('Y-m-d H:i:s'));
     fclose($file);
 }
 

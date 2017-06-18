@@ -14,7 +14,7 @@ if (isset($_GET["class"])) {
     ini_set('html_errors', false);
     error_reporting(0);
     $count = array(
-        "day" => 1,
+        "day" => 0,
         "week" => 0,
         "all" => 0
     );
