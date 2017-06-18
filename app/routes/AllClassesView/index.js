@@ -2,13 +2,14 @@
  * Created by Simon on 23.03.2017.
  */
 import React, {Component} from "react";
-import {View, FlatList, Button, AsyncStorage} from "react-native";
+import {View, FlatList} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ClassListItem from "Vertretungsplan/app/components/ClassListItem";
 import {getData, getAsyncStorage} from "Vertretungsplan/app/utils";
 
 const styles = require("./styles");
-const text = require("Vertretungsplan/app/config/text");
+const AppSettings = require("Vertretungsplan/app/config/settings");
+const AppText = require("Vertretungsplan/app/config/text");
 
 function createEmpty(amount, json) {
     let array = [];
@@ -17,12 +18,12 @@ function createEmpty(amount, json) {
     }
     return array;
 }
+//Avoid opening single class view multiple times by fast clicking
 let opened = false;
-//const ds = new FlatList.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 class AllClassesView extends Component {
 
     static navigationOptions = {
-        title: text.view_title_all_classes,
+        title: AppText.view_title_all_classes,
         tabBarIcon: ({tintColor, focused}) => (
             <Ionicons
                 name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
@@ -45,31 +46,28 @@ class AllClassesView extends Component {
     };
 
     _loadClasses = (data) => {
-        try {
-            let json = JSON.parse(data);
-            this.setState({data: createEmpty(json.length, json)});
-            let i = 0;
-            for (let item in json) {
-                if (json.hasOwnProperty(item))
-                    getData("GetSubstituteCount.php?class=" + json[item])
-                        .then((response) => {
-                            let count = JSON.parse(response);
-                            let array = this.state.data.slice();
-                            array[item] = ({class: json[item], day: count.day, week: count.week, all: count.all});
-                            this.setState({data: array});
-                            i++;
-                            if (i === json.length)
-                                this.setState({refreshing: false});
-                        })
-                        .catch((e) => this.setState({refreshing: false}))
-            }
-        } catch (e) {
+        let json = JSON.parse(data);
+        this.setState({data: createEmpty(json.length, json)});
+        let i = 0;
+        for (let item in json) {
+            if (json.hasOwnProperty(item))
+                getData(AppSettings.data_url_substitute_count + "?class=" + json[item])
+                    .then((response) => {
+                        let count = JSON.parse(response);
+                        let array = this.state.data.slice();
+                        array[item] = ({class: json[item], day: count.day, week: count.week, all: count.all});
+                        this.setState({data: array});
+                        i++;
+                        if (i === json.length)
+                            this.setState({refreshing: false});
+                    })
+                    .catch((e) => this.setState({refreshing: false}))
         }
     };
 
     _onRefresh = () => {
         this.setState({refreshing: true});
-        getData("GetAvailableClasses.php")
+        getData(AppSettings.data_url_available_classes)
             .then((value) => this._loadClasses(value))
             .done();
     };
@@ -110,7 +108,6 @@ class AllClassesView extends Component {
                 refreshing={this.state.refreshing}
                 ListFooterComponent={() => (<View style={styles.footer}/>)}
             />);
-        // ListHeaderComponent={() => (<Button title="Clear Cache" onPress={() => AsyncStorage.clear()}/>)}
     }
 }
 

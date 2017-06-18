@@ -18,6 +18,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import VersionNumber from 'react-native-version-number';
 import {byteLength} from "Vertretungsplan/app/utils";
 const AppText = require('Vertretungsplan/app/config/text');
+const AppSettings = require('Vertretungsplan/app/config/settings');
 const styles = require("./styles");
 const img = require('./icon.png');
 
@@ -75,20 +76,20 @@ class InfoView extends Component {
     };
 
     _openPlayStoreEntry = () => {
-        Linking.openURL("https://play.google.com/store/apps/details?id=com.dotcookie.vertretungsplan").catch(err => console.log('An error occurred', err));
+        Linking.openURL(AppSettings.app_play_store_url).catch(err => console.log('An error occurred', err));
     };
 
     _openDHGVplan = () => {
-        Linking.openURL("https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php").catch(err => console.log('An error occurred', err));
+        Linking.openURL(AppSettings.original_plan_url).catch(err => console.log('An error occurred', err));
     };
 
     _openEmail = () => {
-        Linking.openURL("mailto:simon.niedermayr@gmx.com?").catch(err => console.log('An error occurred', err));
+        Linking.openURL("mailto:"+AppSettings.contact_email).catch(err => console.log('An error occurred', err));
     };
 
 
     _copyEmailToClipboard = () => {
-        Clipboard.setString(AppText.contact_email);
+        Clipboard.setString(AppSettings.contact_email);
         ToastAndroid.show(AppText.info_email_to_clipboard_toast_message, ToastAndroid.SHORT);
     };
 
@@ -122,7 +123,7 @@ class InfoView extends Component {
 
                 <Text style={styles.title}>{AppText.info_contact}</Text>
                 <ListItem group="first" text={AppText.info_contact_dev} onPress={this._openEmail}/>
-                <ListItem group="last" text={AppText.contact_email} onPress={this._copyEmailToClipboard}/>
+                <ListItem group="last" text={AppSettings.contact_email} onPress={this._copyEmailToClipboard}/>
                 <Text style={styles.info}>{AppText.info_contact_info}</Text>
 
                 <ListItem text={AppText.info_open_in_browser} onPress={this._openDHGVplan}/>

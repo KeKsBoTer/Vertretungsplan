@@ -5,6 +5,7 @@ import React, {Component} from "react";
 import {View, FlatList} from "react-native";
 import DayTable from "Vertretungsplan/app/components/DayTable";
 import {getData, getAsyncStorage} from "Vertretungsplan/app/utils";
+import AppSettings from "Vertretungsplan/app/config/settings"
 
 const styles = require("./styles");
 
@@ -26,15 +27,15 @@ class SubstituteView extends Component {
     }
 
     processData = (json) => {
-        let arr =[];
-        for(let date in json["subs"])
-            arr.push({date:date,subs:json["subs"][date]["subs"]});
+        let arr = [];
+        for (let date in json["subs"])
+            arr.push({date: date, subs: json["subs"][date]["subs"]});
         this.setState({data: arr});
     };
 
     _keyExtractor = (item, index) => index;
 
-    _renderItem = ({item,index}) => {
+    _renderItem = ({item}) => {
         return (
             <DayTable date={item["date"]} subs={item["subs"]}/>)
     };
@@ -42,7 +43,7 @@ class SubstituteView extends Component {
     _onRefresh = () => {
         this.setState(
             {refreshing: true},
-            () => getData("GetSubstituteForClass.php?class=" + this.props.navigation.state.params.class)
+            () => getData(AppSettings.data_url_substitute_class + "?class=" + (this.props.navigation ? this.props.navigation.state.params.class : this.props.class))
                 .then((value) => this.processData(JSON.parse(value)))
                 .done()
         )
@@ -55,6 +56,7 @@ class SubstituteView extends Component {
             extraData={this.state}
             keyExtractor={this._keyExtractor}
             renderItem={this._renderItem}
+            ListHeaderComponent={this.props.headerComponent}
             ListFooterComponent={() => (<View style={styles.footer}/>)}
         />)
     }

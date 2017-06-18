@@ -9,7 +9,7 @@ import {StackNavigator, TabNavigator} from "react-navigation";
 import MyClassView from "Vertretungsplan/app/routes/MyClassView/index";
 import DateView from "Vertretungsplan/app/routes/CalendarView/index";
 import AllClassesView from "Vertretungsplan/app/routes/AllClassesView/index";
-import SubViewItem from "Vertretungsplan/app/components/SubViewItem/index";
+import ClassSubstituteView from "Vertretungsplan/app/components/ClassSubstituteView/index";
 import InfoView from "Vertretungsplan/app/routes/InfoView/index";
 const styles = require('./styles');
 
@@ -56,7 +56,7 @@ const App = StackNavigator({
         screen: MainScreenNavigator
     },
     ClassView: {
-        screen: SubViewItem
+        screen: ClassSubstituteView
     }
 }, {
     cardStyle: {

@@ -14,26 +14,15 @@ class DayTable extends Component {
         super(props);
         let date = moment(this.props.date, "DD.MM.YYYY");
         this.state={
-            date: date.format("dddd, DD.MM"),
-            fadeAnim: new Animated.Value(0)
+            date: date.format("dddd, DD.MM")
         };
-    }
-
-    componentDidMount() {
-        Animated.timing(
-            this.state.fadeAnim,
-            {
-                toValue: 1,
-                duration: 200,
-            }
-        ).start();
     }
 
     render() {
         return (
-            <Animated.View style={[styles.container,{opacity: this.state.fadeAnim}]}>
+            <Animated.View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>{this.state.date}</Text>
+                    <Text style={styles.title}>{this.state.date === "Invalid date"?this.props.date:this.state.date}</Text>
                 </View>
                 <View style={styles.wrapper}>
                     <Grid>
@@ -67,8 +56,8 @@ class DayTable extends Component {
                                         </Col>
                                         }
                                         <Col size={1}><Text
-                                            style={styles.rowText}>{v.lesson ? v.lesson : "-"}</Text></Col>
-                                        <Col size={1}><Text style={styles.rowText}>{v.room ? v.room : "-"}</Text></Col>
+                                            style={styles.rowText}>{v["lesson"] ? v["lesson"] : "-"}</Text></Col>
+                                        <Col size={1}><Text style={styles.rowText}>{v["room"] ? v["room"] : "-"}</Text></Col>
                                         <Col size={v.class ? 3 : 4}><Text
                                             style={styles.rowText}>{v.info ? v.info : "-"}</Text></Col>
                                     </Row>)

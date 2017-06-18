@@ -7,7 +7,6 @@ import {Text, View, TouchableHighlight} from 'react-native';
 import Svg, {
     LinearGradient, Defs, Stop, Circle, Text as SvgText
 } from 'react-native-svg';
-import {getData} from 'Vertretungsplan/app/utils';
 const styles = require('./styles');
 
 class ClassListItem extends Component {
@@ -20,7 +19,6 @@ class ClassListItem extends Component {
     }
 
     render() {
-        //onPress={() => this.props.navigation.navigate('AllClassesView', { class: this.props.klasse })}
         return (
             <View style={styles.container}>
                 <View style={[styles.header, this.state.pressed ? styles.touched : undefined]}>

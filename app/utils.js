@@ -5,8 +5,7 @@
  */
 
 import {Alert, AsyncStorage} from "react-native";
-import md5 from "md5";
-const text = require('Vertretungsplan/app/config/text');
+const AppSettings = require('Vertretungsplan/app/config/settings');
 
 /**
  * A Function to get the data for the app, from the Website (https://dhg.ssl-secured-server.de/DHG/vplan/vplan.php)
@@ -21,17 +20,6 @@ export function getData(url) {
                 resolve(content);
             })
             .catch((error) => reject(error))
-        /* getAsyncStorage(url)
-         .then((value) => {
-         let hash = value ? md5(value) : undefined;
-         downloadData(url, hash)
-         .then((content) => {
-         resolve(content === "[]" ? value : content);
-         })
-         .catch(() => resolve(value))
-         })
-         .catch(reject);
-         */
     });
 }
 
@@ -53,7 +41,7 @@ const isAlertOpen = [false];
 const showError = false;
 export function downloadData(url, hash) {
     return new Promise((resolve, reject) => {
-        let completeUrl = text.server + url;
+        let completeUrl = AppSettings.server + url;
         if (hash)
             completeUrl += (url.indexOf("?") > -1 ? "&" : "?") + "hash=" + hash;
         fetch(completeUrl, {

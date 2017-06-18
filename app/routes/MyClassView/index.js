@@ -3,11 +3,12 @@
  * @author S. Niedermayr
  */
 import React, {Component} from "react";
-import {View, Picker, FlatList, Text} from "react-native";
-import DayTable from "Vertretungsplan/app/components/DayTable";
+import {View, Picker, Text} from "react-native";
+import ClassSubstituteView from "Vertretungsplan/app/components/ClassSubstituteView";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
+import {getAsyncStorage, setAsyncStorage} from "Vertretungsplan/app/utils";
 const AppText = require("Vertretungsplan/app/config/text");
+
 const styles = require("./styles");
 
 /**
@@ -27,8 +28,13 @@ function getClasses() {
     return classes;
 }
 
-const controllerUrl = "GetSubstituteForClass.php?class=";
+const defaultClass = "5A";
 
+/**
+ * View that displays the substitutes for the users own class.
+ * The user can set his own class using a picker, which is displayed at the top.
+ * The class is remembered and saved in the AsyncStorage
+ */
 class MyClassView extends Component {
 
     static navigationOptions = {
@@ -45,79 +51,42 @@ class MyClassView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            class: "5A",
-            data: [],
-            refreshing:false,
-            updateFunction: null
+            class: defaultClass,
+            availableClasses: getClasses().map((c) => <Picker.Item key={c} value={c} label={c}/>)
         };
     }
-
-    processData = (json) => {
-        let arr = [];
-        for (let date in json["subs"])
-            arr.push({date: date, subs: json["subs"][date]["subs"]});
-        this.setState({data: arr});
-    };
-
-    _keyExtractor = (item, index) => index;
-
-    _renderItem = ({item, index}) => {
-        return (
-            <DayTable date={item["date"]} subs={item["subs"]}/>)
-    };
-
-    _onRefresh = () => {
-        this.setState(
-            {refreshing: true},
-            () => getData("GetSubstituteForClass.php?class=" + this.state.class)
-                .then((value) => this.processData(JSON.parse(value)))
-                .done(()=>this.setState({refreshing: false}))
-        )
-        ;
-    };
 
     componentWillMount() {
         getAsyncStorage("MyClass")
             .then((className) => {
-                this.setState({class: className}, () => this._onRefresh());
-                if (!className) {
-                    //saving default 5A as class
-                    setAsyncStorage("MyClass", this.state.class);
-                }
-                this.state.updateFunction && this.state.updateFunction();
+                if (className === null)
+                    className = this.state.class;
+                this.setState({class: className}, () => this.refs["classView"]._onRefresh());
+                setAsyncStorage("MyClass", this.state.class);
             });
     }
 
     render() {
-        let classes = getClasses().map((c) => {
-            return <Picker.Item key={c} value={c} label={c}/>
-        });
-        return (<FlatList
-            data={this.state.data}
-            extraData={this.state}
-            keyExtractor={this._keyExtractor}
-            renderItem={this._renderItem}
-            removeClippedSubviews={false}
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-            ListHeaderComponent={() => (
-                <View style={styles.classSelection}>
-                    <Text style={styles.classText}>Meine Klasse:</Text>
-                    <Picker
-                        style={{flex: 1}}
-                        selectedValue={this.state.class}
-                        onValueChange={(className) => {
-                            this.setState({
-                                class: className
-                            },()=>this._onRefresh());
-                            setAsyncStorage("MyClass", className);
-                        }}>
-                        {classes}
-                    </Picker>
-                </View>
-            )}
-            ListFooterComponent={() => this.state.data.length!==0?(<View style={styles.footer}/>):(<Text style={styles.empty}>{"Keine Vertrtungen für Klasse "+this.state.class+" vorhanden"}</Text>)}
-        />)
+        return (
+            <ClassSubstituteView class={this.state.class}
+                         ref="classView"
+                         headerComponent={() =>
+                             <View style={styles.classSelection}>
+                                 <Text style={styles.classText}>{AppText.my_class_text}</Text>
+                                 <Picker
+                                     style={{flex: 1}}
+                                     selectedValue={this.state.class}
+                                     onValueChange={(className) => {
+                                         this.setState({
+                                             class: className
+                                         }, this.refs["classView"]._onRefresh);
+                                         setAsyncStorage("MyClass", className);
+                                     }}>
+                                     {this.state.availableClasses}
+                                 </Picker>
+                             </View>
+                         }
+            />)
     }
 }
 
