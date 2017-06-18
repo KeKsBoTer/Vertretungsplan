@@ -30,5 +30,13 @@ module.exports = StyleSheet.create({
     classText: {
         fontSize: 17,
         color: "black"
+    },
+    footer:{
+        height:10
+    },
+    empty:{
+        textAlign: "center",
+        marginTop: 20,
+        fontSize: 14
     }
 });

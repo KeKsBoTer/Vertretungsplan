@@ -2,6 +2,40 @@
 #
 .DS_Store
 
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+
+# node.js
+#
+node_modules/
+npm-debug.log
+yarn-error.log
+
 # BUCK
 buck-out/
 \.buckd/
@@ -17,26 +51,3 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-.tmp/
-.watchmanconfig
-__tests__/
-android/.gradle/
-android/app/BUCK
-android/app/build/
-android/app/google-services.json
-android/app/proguard-rules.pro
-android/app/src/main/assets/
-android/build.gradle
-android/build/
-android/gradle.properties
-android/gradle/
-android/gradlew
-android/gradlew.bat
-android/keystores/
-android/settings.gradle
-app_back/
-img/icon-settings.png
-ios/
-node_modules/
-yarn.lock
-wifiDebug.cmd

@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,Animated} from 'react-native';
 import {Grid, Col, Row} from 'react-native-elements'
 import moment from "moment";
 const styles = require('./styles');
@@ -17,11 +17,12 @@ class DayTable extends Component {
             date: date.format("dddd, DD.MM")
         };
     }
+
     render() {
         return (
-            <View style={styles.container}>
+            <Animated.View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>{this.state.date}</Text>
+                    <Text style={styles.title}>{this.state.date === "Invalid date"?this.props.date:this.state.date}</Text>
                 </View>
                 <View style={styles.wrapper}>
                     <Grid>
@@ -55,15 +56,15 @@ class DayTable extends Component {
                                         </Col>
                                         }
                                         <Col size={1}><Text
-                                            style={styles.rowText}>{v.lesson ? v.lesson : "-"}</Text></Col>
-                                        <Col size={1}><Text style={styles.rowText}>{v.room ? v.room : "-"}</Text></Col>
+                                            style={styles.rowText}>{v["lesson"] ? v["lesson"] : "-"}</Text></Col>
+                                        <Col size={1}><Text style={styles.rowText}>{v["room"] ? v["room"] : "-"}</Text></Col>
                                         <Col size={v.class ? 3 : 4}><Text
                                             style={styles.rowText}>{v.info ? v.info : "-"}</Text></Col>
                                     </Row>)
                             })}
                     </Grid>
                 </View>
-            </View>
+            </Animated.View>
         )
     };
 }

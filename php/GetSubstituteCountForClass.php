@@ -70,5 +70,5 @@ function cmp($a, $b)
 uksort($count, "cmp");
 $output = json_encode($count);
 header('Content-Type: application/json');
-//header('Content-Length:' . strlen($output));
+header('Content-Length:' . strlen($output));
 echo $output;

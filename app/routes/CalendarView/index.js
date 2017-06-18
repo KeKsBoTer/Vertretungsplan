@@ -3,67 +3,75 @@
  * @author S. Niedermayr
  */
 import React, {Component} from 'react';
-import {getAsyncStorage} from "Vertretungsplan/app/utils";
+import {View, FlatList} from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getData} from "Vertretungsplan/app/utils";
-import {View} from "react-native";
-import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
 import DayTable from "Vertretungsplan/app/components/DayTable";
+import {getAsyncStorage,getData} from "Vertretungsplan/app/utils";
 
-const text = require("Vertretungsplan/app/config/text");
+const AppText = require("Vertretungsplan/app/config/text");
+const AppSettings = require("Vertretungsplan/app/config/settings");
 const styles = require('./styles');
 
 class CalendarView extends Component {
 
     static navigationOptions = {
-        title: text.view_title_calendar,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        title: AppText.view_title_calendar,
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-calendar' : 'ios-calendar-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
-            isRefreshing: false
+            data: [{date: "Laden...", subs: [{lesson: "-", room: "-", info: "-"}]}]
         };
-    };
+    }
+
+    componentWillMount() {
+        this._onRefresh();
+    }
 
     processData = (json) => {
-        this.setState({data: []},
-            () => {
-                for (let v in json) {
-                    if (json.hasOwnProperty(v) && json[v]["subs"].length > 0)
-                        this.state.data[json[v].date] = json[v].subs;
-                }
-                this.setState({data: this.state.data})
-            });
+        let arr = [];
+        for (let i in json)
+            if (json[i]["subs"].length > 0)
+                arr.push(json[i]);
+            else
+                console.log(json[i])
+        this.setState({data: json});
     };
 
+    _keyExtractor = (item, index) => index;
+
+    _renderItem = ({item}) => {
+        //console.log("render",item);
+        return (
+            <DayTable date={item["date"]} subs={item["subs"]}/>)
+    };
+
+    _onRefresh = () => {
+        this.setState(
+            {refreshing: true},
+            () => getData(AppSettings.data_url_substitute_date)
+                .then((value) => this.processData(JSON.parse(value)))
+                .done()
+        )
+        ;
+    };
 
     render() {
-        let Arr = [];
-        for (let k in this.state.data)
-            Arr.push(<DayTable key={k} date={k} subs={this.state.data[k]}/>);
-
-        return (
-            <RefreshScrollView
-                url={"GetSubstituteByDate.php"}
-                processData={this.processData}
-                test={(obj) => this.state.updateFunction = obj}
-            >
-                <View style={styles.container}>
-                    {Arr}
-                </View>
-            </RefreshScrollView>
-        )
+        return (<FlatList
+            data={this.state.data}
+            extraData={this.state}
+            keyExtractor={this._keyExtractor}
+            renderItem={this._renderItem}
+            ListFooterComponent={() => (<View style={styles.footer}/>)}
+        />)
     }
 }
 module.exports = CalendarView;

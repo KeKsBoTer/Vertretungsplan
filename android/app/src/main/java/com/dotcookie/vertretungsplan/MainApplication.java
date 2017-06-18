@@ -9,7 +9,6 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.ocetnik.timer.BackgroundTimerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNVersionNumberPackage(),
             new VectorIconsPackage(),
-            new SvgPackage(),
-            new BackgroundTimerPackage()
+            new SvgPackage()
       );
     }
   };

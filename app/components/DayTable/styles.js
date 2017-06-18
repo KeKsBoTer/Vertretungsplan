@@ -12,13 +12,15 @@ module.exports = StyleSheet.create({
     container: {
         backgroundColor: 'rgba(255,255,255,0.4)',
         borderRadius: 5,
-        marginBottom: 10
+        margin: 10,
+        marginBottom: 0
     },
     header: {
         backgroundColor: 'rgba(255,255,255,0.5)',
         flexDirection: 'row',
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
+        paddingLeft:5
     },
     title: {
         padding: 7,
@@ -27,7 +29,8 @@ module.exports = StyleSheet.create({
         fontWeight: '100'
     },
     wrapper: {
-        padding: 7
+        padding: 7,
+        paddingLeft:10
     },
     rowText: {
         fontSize: 16

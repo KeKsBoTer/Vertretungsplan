@@ -15,5 +15,8 @@ module.exports = StyleSheet.create({
     loader:{
         borderWidth:0,
         height:3
+    },
+    footer:{
+        height:10
     }
 });

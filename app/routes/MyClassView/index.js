@@ -4,11 +4,11 @@
  */
 import React, {Component} from "react";
 import {View, Picker, Text} from "react-native";
-import DayTable from "Vertretungsplan/app/components/DayTable";
+import ClassSubstituteView from "Vertretungsplan/app/components/ClassSubstituteView";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getData, downloadData, getAsyncStorage, MD5, setAsyncStorage} from "Vertretungsplan/app/utils";
-import RefreshScrollView from "Vertretungsplan/app/components/RefreshScrollView";
+import {getAsyncStorage, setAsyncStorage} from "Vertretungsplan/app/utils";
 const AppText = require("Vertretungsplan/app/config/text");
+
 const styles = require("./styles");
 
 /**
@@ -28,95 +28,65 @@ function getClasses() {
     return classes;
 }
 
-const controllerUrl ="GetSubstituteForClass.php?class=";
+const defaultClass = "5A";
 
+/**
+ * View that displays the substitutes for the users own class.
+ * The user can set his own class using a picker, which is displayed at the top.
+ * The class is remembered and saved in the AsyncStorage
+ */
 class MyClassView extends Component {
 
     static navigationOptions = {
         title: AppText.view_title_my_class,
-        tabBar: {
-            icon: ({tintColor, focused}) => (
-                <Ionicons
-                    name={focused ? 'ios-person' : 'ios-person-outline'}
-                    size={26}
-                    style={{color: tintColor}}
-                />
-            )
-        }
+        tabBarIcon: ({tintColor, focused}) => (
+            <Ionicons
+                name={focused ? 'ios-person' : 'ios-person-outline'}
+                size={26}
+                style={{color: tintColor}}
+            />
+        )
     };
 
     constructor(props) {
         super(props);
         this.state = {
-            class: "5A",
-            data: [],
-            updateFunction: null
+            class: defaultClass,
+            availableClasses: getClasses().map((c) => <Picker.Item key={c} value={c} label={c}/>)
         };
     }
 
     componentWillMount() {
         getAsyncStorage("MyClass")
             .then((className) => {
-                if (className) {
-                    getAsyncStorage(controllerUrl+ className)
-                        .then((value) => {
-                            if (value)
-                                this.setState({
-                                    data: JSON.parse(value).subs
-                                });
-                        });
-                    this.setState({class: className});
-                    setAsyncStorage("MyClass", className);
-                }
-                else {
-                    //saving default 5A as class
-                    setAsyncStorage("MyClass", this.state.class);
-                }
-                this.state.updateFunction && this.state.updateFunction();
+                if (className === null)
+                    className = this.state.class;
+                this.setState({class: className}, () => this.refs["classView"]._onRefresh());
+                setAsyncStorage("MyClass", this.state.class);
             });
     }
 
-    processData = (json) => {
-        let data = [];
-        for (let v in json.subs)
-            if (json.subs.hasOwnProperty(v))
-                data[v] = json.subs[v];
-        this.setState({data: data});
-    };
-
     render() {
-        let Arr = [];
-        for (let k in this.state.data)
-            Arr.push(<DayTable key={k} date={k} subs={this.state.data[k].subs}/>);
-        let classes = getClasses().map((c) => {
-            return <Picker.Item key={c} value={c} label={c}/>
-        });
         return (
-            <RefreshScrollView
-                url={controllerUrl + this.state.class}
-                processData={this.processData}
-                refresh={(obj) => this.state.updateFunction = obj}
-                downloadOnStart={false}
-            >
-                <View style={styles.classSelection}>
-                    <Text style={styles.classText}>Meine Klasse:</Text>
-                    <Picker
-                        style={{flex: 1}}
-                        selectedValue={this.state.class}
-                        onValueChange={(className) => {
-                            setAsyncStorage("MyClass", className).done(() => {
-                                this.setState({
-                                    class: className
-                                }, this.state.updateFunction);
-                            });
-                        }}>
-                        {classes}
-                    </Picker>
-                </View>
-                <View style={styles.container}>
-                    {Arr}
-                </View>
-            </RefreshScrollView>);
+            <ClassSubstituteView class={this.state.class}
+                         ref="classView"
+                         headerComponent={() =>
+                             <View style={styles.classSelection}>
+                                 <Text style={styles.classText}>{AppText.my_class_text}</Text>
+                                 <Picker
+                                     style={{flex: 1}}
+                                     selectedValue={this.state.class}
+                                     onValueChange={(className) => {
+                                         this.setState({
+                                             class: className
+                                         }, this.refs["classView"]._onRefresh);
+                                         setAsyncStorage("MyClass", className);
+                                     }}>
+                                     {this.state.availableClasses}
+                                 </Picker>
+                             </View>
+                         }
+            />)
     }
 }
 
