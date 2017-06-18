@@ -4,7 +4,7 @@
     <option name="SCOPE_TYPE" value="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85d9640a-349b-4d24-b552-3636865e2716" name="Default" comment=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components">
+    <list default="true" id="85d9640a-349b-4d24-b552-3636865e2716" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -239,7 +239,6 @@
         <option value="$PROJECT_DIR$/php/GetSubstituteForClass.php" />
         <option value="$PROJECT_DIR$/app/routes/SettingsView/index.js" />
         <option value="$PROJECT_DIR$/app/routes/SubstituteView/index.js" />
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/styles.js" />
@@ -281,6 +280,7 @@
         <option value="$PROJECT_DIR$/app/routes/AllClassesView/index.js" />
         <option value="$PROJECT_DIR$/app/routes/CalendarView/index.js" />
         <option value="$PROJECT_DIR$/app/utils.js" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -1142,7 +1142,7 @@
       <workItem from="1497205998133" duration="3671000" />
       <workItem from="1497209856812" duration="1483000" />
       <workItem from="1497299821997" duration="8369000" />
-      <workItem from="1497818736430" duration="4341000" />
+      <workItem from="1497818736430" duration="4361000" />
     </task>
     <task id="LOCAL-00001" summary=" - Adding project to GitHub&#10; - Added Php-Scripts for converting html-file to json string&#10; - In-App features:&#10;    - My Class Tab: Select own class and see all available substitutes for that class&#10;    - All Classes Tab: Displays a list of all classes that currently have substitutes in planing&#10;    - Calendar View: Displays all substitutes by Date&#10;    - Settings View: Shows the App Icon, Version and co.&#10;        - Contact button for writing an email and copying dev email to clipboard&#10;        - Open substitute plan in browser button&#10;        - delete local cache button">
       <created>1494454351868</created>
@@ -1256,11 +1256,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497822664627</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary=" - Updated workspace">
+      <created>1497823106065</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1497823106065</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="464071000" />
+    <option name="totallyTimeSpent" value="464091000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1436,7 +1443,8 @@
     <MESSAGE value=" - Removed some unused packages" />
     <MESSAGE value=" - Improved server side php scripts and fixed some bugs" />
     <MESSAGE value=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components" />
-    <option name="LAST_COMMIT_MESSAGE" value=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components" />
+    <MESSAGE value=" - Updated workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value=" - Updated workspace" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
