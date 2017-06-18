@@ -4,34 +4,8 @@
     <option name="SCOPE_TYPE" value="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85d9640a-349b-4d24-b552-3636865e2716" name="Default" comment=" - Improved server side php scripts and fixed some bugs">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/config/settings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/routes/MyClassView/index_back.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/NavBar/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/NavBar/styles.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/ProgressBar/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/ProgressBar/styles.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/RefreshScrollView/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/SubsList/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/SubsList/styles.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/TabBar/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/TabBar/styles.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/components/SubViewItem/index.js" afterPath="$PROJECT_DIR$/app/components/ClassSubstituteView/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/components/SubViewItem/styles.js" afterPath="$PROJECT_DIR$/app/components/ClassSubstituteView/styles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Simon.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Simon.xml" />
+    <list default="true" id="85d9640a-349b-4d24-b552-3636865e2716" name="Default" comment=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/build.gradle" afterPath="$PROJECT_DIR$/android/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/app/src/main/java/com/dotcookie/vertretungsplan/MainApplication.java" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/dotcookie/vertretungsplan/MainApplication.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/ClassListItem/index.js" afterPath="$PROJECT_DIR$/app/components/ClassListItem/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/DayTable/index.js" afterPath="$PROJECT_DIR$/app/components/DayTable/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/text.js" afterPath="$PROJECT_DIR$/app/config/text.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.js" afterPath="$PROJECT_DIR$/app/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/AllClassesView/index.js" afterPath="$PROJECT_DIR$/app/routes/AllClassesView/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/CalendarView/index.js" afterPath="$PROJECT_DIR$/app/routes/CalendarView/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/CalendarView/styles.js" afterPath="$PROJECT_DIR$/app/routes/CalendarView/styles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/InfoView/index.js" afterPath="$PROJECT_DIR$/app/routes/InfoView/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/MyClassView/index.js" afterPath="$PROJECT_DIR$/app/routes/MyClassView/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils.js" afterPath="$PROJECT_DIR$/app/utils.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -68,11 +42,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="53" column="37" lean-forward="true" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+            <state relative-caret-position="374">
+              <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -118,18 +102,6 @@
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#43#82#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/ClassListItem/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="20" column="14" lean-forward="false" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -238,6 +210,11 @@
     <option name="UPDATE_CHANGES_POLICY" value="SHELVE" />
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="update" />
+      </map>
+    </option>
     <push-targets>
       <push-target-info target-remote="simon" target-branch="update" repo="$PROJECT_DIR$" source="master" />
     </push-targets>
@@ -1165,7 +1142,7 @@
       <workItem from="1497205998133" duration="3671000" />
       <workItem from="1497209856812" duration="1483000" />
       <workItem from="1497299821997" duration="8369000" />
-      <workItem from="1497818736430" duration="3608000" />
+      <workItem from="1497818736430" duration="4341000" />
     </task>
     <task id="LOCAL-00001" summary=" - Adding project to GitHub&#10; - Added Php-Scripts for converting html-file to json string&#10; - In-App features:&#10;    - My Class Tab: Select own class and see all available substitutes for that class&#10;    - All Classes Tab: Displays a list of all classes that currently have substitutes in planing&#10;    - Calendar View: Displays all substitutes by Date&#10;    - Settings View: Shows the App Icon, Version and co.&#10;        - Contact button for writing an email and copying dev email to clipboard&#10;        - Open substitute plan in browser button&#10;        - delete local cache button">
       <created>1494454351868</created>
@@ -1272,11 +1249,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497822224417</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components">
+      <created>1497822664627</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1497822664627</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="463338000" />
+    <option name="totallyTimeSpent" value="464071000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1303,14 +1287,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.49369085" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30444205" sideWeight="0.4914712" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30444205" sideWeight="0.4914712" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.4978678" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719395" sideWeight="0.4978678" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="PsiViewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.49573562" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.49573562" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23827292" sideWeight="0.5222102" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3564464" sideWeight="0.4936034" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3575298" sideWeight="0.4936034" order="10" side_tool="false" content_ui="tabs" />
@@ -1451,7 +1435,8 @@
     <MESSAGE value=" - A lot of temporary and permanent changes&#10; - Updated react-version to 16.0.0-alpha.12&#10; - Updated react-native-version to 0.44.0&#10; - Implemented server side data-caching to improve performance&#10; - improved network utils&#10; - Replaced RefreshScrollComponent with FlatList&#10; -" />
     <MESSAGE value=" - Removed some unused packages" />
     <MESSAGE value=" - Improved server side php scripts and fixed some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value=" - Improved server side php scripts and fixed some bugs" />
+    <MESSAGE value=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components" />
+    <option name="LAST_COMMIT_MESSAGE" value=" - Removed redundant code in Java and gradle code&#10; - Separated app text and settings in two files&#10; - Changed Server url to &quot;dotcookie.me&quot;&#10; - Renamed SubViewItem to ClassSubstituteView&#10; - Replaced substitute-list in MyClass View with ClassSubstituteView&#10; - Replaced RefreshScrollView with FlatList&#10; - Removed unused code and components" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1486,19 +1471,12 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/dotcookie/vertretungsplan/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/dotcookie/vertretungsplan/MainApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="29" column="28" lean-forward="false" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1890,8 +1868,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="53" column="37" lean-forward="true" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
+        <state relative-caret-position="374">
+          <caret line="65" column="29" lean-forward="true" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
