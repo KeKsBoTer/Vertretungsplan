@@ -17,6 +17,6 @@ Du kannst die App auf folgenden Wegen installieren:
 - **[React-Native](https://facebook.github.io/react-native/)**: Du kannst das Repository klonen und die App selbst mit React-Native builden.
 
 Ich hoffe die App ist nützlich.
-Ich freue mich jeder zeit über Feedback
+Ich freue mich jederzeit über Feedback
 
 *Simon*
