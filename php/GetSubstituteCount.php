@@ -7,7 +7,7 @@
  * @param $contents
  * @return string
  */
-require('DownloadPlan.php');
+require('Utils.php');
 $output = "[]";
 if (isset($_GET["class"])) {
     $json = getSubstitutePlan();
@@ -18,23 +18,23 @@ if (isset($_GET["class"])) {
         "week" => 0,
         "all" => 0
     );
-    foreach ($json as $subDate) {
+    foreach (array_keys($json) as $dateStr) {
         $today = strtotime(date("d.m.Y"));
-        $date = strtotime($subDate["date"]);
+        $date = strtotime($dateStr);
         if ($today == $date) {
-            foreach ($subDate["subs"] as $sub) {
-                if ($sub["class"]==$_GET["class"])
-                    $count["day"]++;
+            foreach (array_keys($json[$dateStr]) as $class) {
+                if ($class==$_GET["class"])
+                    $count["day"]+=count($json[$dateStr][$class]);
             }
         } else if ((date("W") == date("W", $date)) && (date("Y") == date("Y", $date))) {
-            foreach ($subDate["subs"] as $sub) {
-                if ($sub["class"]==$_GET["class"])
-                    $count["week"]++;
+            foreach (array_keys($json[$dateStr]) as $class) {
+                if ($class==$_GET["class"])
+                    $count["week"]+=count($json[$dateStr][$class]);
             }
         } else {
-            foreach ($subDate["subs"] as $sub) {
-                if ($sub["class"]==$_GET["class"])
-                    $count["all"]++;
+            foreach (array_keys($json[$dateStr]) as $class) {
+                if ($class==$_GET["class"])
+                    $count["all"]+=count($json[$dateStr][$class]);
             }
         }
     }

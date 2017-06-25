@@ -1,5 +1,6 @@
 /**
  * Created by Simon on 22.04.2017.
+ *
  */
 import React, {Component} from "react";
 import {View, FlatList} from "react-native";
@@ -28,8 +29,8 @@ class SubstituteView extends Component {
 
     processData = (json) => {
         let arr = [];
-        for (let date in json["subs"])
-            arr.push({date: date, subs: json["subs"][date]["subs"]});
+        for (let date in json)
+            arr.push({date: date, subs: json[date]});
         this.setState({data: arr});
     };
 
@@ -44,7 +45,7 @@ class SubstituteView extends Component {
         this.setState(
             {refreshing: true},
             () => getData(AppSettings.data_url_substitute_class + "?class=" + (this.props.navigation ? this.props.navigation.state.params.class : this.props.class))
-                .then((value) => this.processData(JSON.parse(value)))
+                .then((value) =>this.processData(JSON.parse(value)))
                 .done()
         )
         ;

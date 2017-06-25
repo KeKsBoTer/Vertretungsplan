@@ -41,7 +41,7 @@ const isAlertOpen = [false];
 const showError = false;
 export function downloadData(url, hash) {
     return new Promise((resolve, reject) => {
-        let completeUrl = AppSettings.server + url;
+        let completeUrl = (AppSettings.use_dev_server ? AppSettings.server_dev : AppSettings.server) + url;
         if (hash)
             completeUrl += (url.indexOf("?") > -1 ? "&" : "?") + "hash=" + hash;
         fetch(completeUrl, {

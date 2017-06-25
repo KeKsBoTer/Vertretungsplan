@@ -7,7 +7,7 @@
  * @param $contents
  * @return string
  */
-require('DownloadPlan.php');
+require('Utils.php');
 $json = getSubstitutePlan();
 $output = json_encode($json);
 header('Content-Type: application/json');

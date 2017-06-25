@@ -7,6 +7,9 @@ import {View, Picker, Text} from "react-native";
 import ClassSubstituteView from "Vertretungsplan/app/components/ClassSubstituteView";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getAsyncStorage, setAsyncStorage} from "Vertretungsplan/app/utils";
+import FCM, {
+    FCMEvent
+} from "react-native-fcm";
 const AppText = require("Vertretungsplan/app/config/text");
 
 const styles = require("./styles");
@@ -56,38 +59,66 @@ class MyClassView extends Component {
         };
     }
 
+    componentDidMount() {
+        FCM.requestPermissions();
+        //enable notification test for debugging
+        if (__DEV__)
+            FCM.subscribeToTopic('/topics/debug');
+        else
+            FCM.unsubscribeFromTopic('/topics/debug');
+
+        //fired when user clicks on notification or notification is pushed when app is in foreground
+        FCM.on(FCMEvent.Notification, () => {
+            FCM.removeAllDeliveredNotifications();
+            this.props.navigation.navigate("MyClass");
+            this.refs["classView"]._onRefresh()
+        });
+    }
+
     componentWillMount() {
         getAsyncStorage("MyClass")
             .then((className) => {
                 if (className === null)
                     className = this.state.class;
+                else {
+                    FCM.subscribeToTopic('/topics/' + className);
+                }
                 this.setState({class: className}, () => this.refs["classView"]._onRefresh());
                 setAsyncStorage("MyClass", this.state.class);
             });
     }
 
+    _onClassChanged = (value) => {
+        //unsubscribe old class
+        FCM.unsubscribeFromTopic('/topics/' + this.state.class);
+        this.setState({
+            class: value
+        }, this.refs["classView"]._onRefresh);
+
+        //subscribe to new class
+        FCM.subscribeToTopic('/topics/' + value);
+        setAsyncStorage("MyClass", value);
+    };
+
     render() {
         return (
-            <ClassSubstituteView class={this.state.class}
-                         ref="classView"
-                         headerComponent={() =>
-                             <View style={styles.classSelection}>
-                                 <Text style={styles.classText}>{AppText.my_class_text}</Text>
-                                 <Picker
-                                     style={{flex: 1}}
-                                     selectedValue={this.state.class}
-                                     onValueChange={(className) => {
-                                         this.setState({
-                                             class: className
-                                         }, this.refs["classView"]._onRefresh);
-                                         setAsyncStorage("MyClass", className);
-                                     }}>
-                                     {this.state.availableClasses}
-                                 </Picker>
-                             </View>
-                         }
+            <ClassSubstituteView
+                class={this.state.class}
+                ref="classView"
+                headerComponent={() =>
+                    <View style={styles.classSelection}>
+                        <Text style={styles.classText}>{AppText.my_class_text}</Text>
+                        <Picker
+                            style={{flex: 1}}
+                            selectedValue={this.state.class}
+                            onValueChange={this._onClassChanged}>
+                            {this.state.availableClasses}
+                        </Picker>
+                    </View>
+                }
             />)
     }
+
 }
 
 module.exports = MyClassView;

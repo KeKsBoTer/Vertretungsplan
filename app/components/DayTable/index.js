@@ -1,9 +1,10 @@
 /**
  * Created by Simon on 23.03.2017.
+ *
  */
 
 import React, {Component} from 'react';
-import {Text, View,Animated} from 'react-native';
+import {Text, View} from 'react-native';
 import {Grid, Col, Row} from 'react-native-elements'
 import moment from "moment";
 const styles = require('./styles');
@@ -20,7 +21,7 @@ class DayTable extends Component {
 
     render() {
         return (
-            <Animated.View style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>{this.state.date === "Invalid date"?this.props.date:this.state.date}</Text>
                 </View>
@@ -64,7 +65,7 @@ class DayTable extends Component {
                             })}
                     </Grid>
                 </View>
-            </Animated.View>
+            </View>
         )
     };
 }

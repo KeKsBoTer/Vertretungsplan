@@ -90,7 +90,7 @@ class AllClassesView extends Component {
                     if (!opened) {
                         opened = true;
                         this.props.navigation.navigate('ClassView', {class: item.class});
-                        setTimeout(() => opened = false, 100) //prevent user from navigating twice
+                        setTimeout(() => opened = false, 200) //prevent user from navigating twice
                     }
                 }}
             />)

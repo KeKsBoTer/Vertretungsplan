@@ -5,33 +5,24 @@
  * Date: 17.04.2017
  * Time: 22:51
  */
-require('DownloadPlan.php');
+require('Utils.php');
 date_default_timezone_set("Europe/London");
 error_reporting(0);
-$class = $_GET["class"];
+$className = $_GET["class"];
 $hash = $_GET["hash"];
-if (empty($class))
-    $class = "5A";
+if (empty($className))
+    $className = "5A";
 if (empty($hash))
     $hash = "";
 
 $json = getSubstitutePlan();
 
 $response = array();
-$response["class"] = $class;
-$response["subs"] = array();
-foreach ($json as $subDate) {
-    $date = date("d.m.Y", strtotime($subDate["date"]));
-    foreach ($subDate["subs"] as $sub) {
-        if ($sub["class"] == $class) {
-            if (empty($response["subs"][$date])) {
-                $response["subs"][$date] = array();
-            }
-            $response["subs"][$date]["subs"][] = array(
-                "lesson" => $sub["lesson"],
-                "room" => $sub["room"],
-                "info" => $sub["info"]
-            );
+foreach (array_keys($json) as $date) {
+    $dateF = date("d.m.Y", strtotime($date));
+    foreach (array_keys($json[$date]) as $class) {
+        if ($class == $className) {
+            $response[$dateF]=$json[$date][$class];
         }
     }
 }
